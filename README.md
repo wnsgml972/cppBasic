@@ -1,7 +1,8 @@
-# 자신의 Github ID로 Branch를 만들고 Pull Request를 통해 개발 진행
-
 # cppBasic
 CPP 교육용
+
+> 자신의 Github ID로 Branch를 만들고 Pull Request를 통해 개발 진행
+
 
 ## C++ 기본
 - C-Style로 구현 (클래스 사용말고, 구조체와 함수 사용)
