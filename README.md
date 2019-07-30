@@ -1,3 +1,5 @@
+# 자신의 Github ID로 Branch를 만들고 Pull Request를 통해 개발 진행
+
 # cppBasic
 CPP 교육용
 
@@ -31,7 +33,7 @@ CPP 교육용
 ### DataManager 클래스 구현
 - 생성/삭제되는 Vector/List 정보를 관리
 - GetSize - 전체 자료구조의 갯수를 반환
-- PrintInfomation - 전체 자료구조의 정보 출력"	"C++ Style로 다시 만들 것
+- PrintInfomation - 전체 자료구조의 정보 출력
 
 ### Reference
 * <https://github.com/wnsgml972/midas_log/blob/master/contents/BasicEducation/CppBasic.md>
