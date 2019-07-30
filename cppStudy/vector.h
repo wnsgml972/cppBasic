@@ -32,7 +32,7 @@ namespace VectorSpace
 		const int GetVectorId() const;
 	private:
 		//중복체크
-		std::optional<int> IsDuplicate(int data);
+		std::optional<int> IsDuplicateDataInVectorReturnIdx(int data);
 		//삭제 후 데이터 재정렬
 		void ShiftLeft(int index);
 

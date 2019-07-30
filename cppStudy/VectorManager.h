@@ -12,8 +12,8 @@ namespace VectorSpace
 	public : 
 		VectorManager();
 		virtual ~VectorManager() = default;
-		//create Vector
 		
+		//create Vector		
 		void CreateVector(std::shared_ptr<Vector> newVector);
 
 		//append Data
