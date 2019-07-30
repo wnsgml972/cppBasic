@@ -1,11 +1,11 @@
 # cppBasic
 CPP 교육용
 
-> 1. Issue 생성
-> 2. 궁금증 및 발생할 문제들 기록할 것들 Issue에 기록
-> 3. Commit 시 Issue 걸어 Commit `Commit Title(Issue-Num)`
-> 4. 자신의 Github ID로 Branch를 만들고 Pull Request를 통해 개발 진행
-
+> 1. fork하여 feature/start branch에서 자신의 Github ID로 Branch를 만들어 개발 시작
+> 2. Issue 생성
+> 3. 궁금증 및 발생할 문제들, 기록할 것들 Issue에 기록
+> 4. Commit 시 Issue 번호를 걸어 Commit `Commit Title(Issue-Num)`
+> 5. Pull Request를 통해 Code Review 진행 (자신의 Github ID branch -> wnsgml972의 자신의 Github ID)
 
 ## C++ 기본
 - C-Style로 구현 (클래스 사용말고, 구조체와 함수 사용)
