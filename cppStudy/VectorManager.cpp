@@ -1,22 +1,20 @@
-
 #include "VectorManager.h"
 #include <assert.h>
 
-namespace VectorSpace 
-{	
-	VectorManager::VectorManager() 
+namespace VectorSpace
+{
+	VectorManager::VectorManager()
 	{
 		autoIncreasementId = 0;
- 	}
-
-	void VectorManager::CreateVector(std::shared_ptr<Vector> newVector) 
-	{
-		
-		newVector->SetVectorId(++autoIncreasementId);
-		m_id2Vector.emplace(autoIncreasementId, newVector);		
 	}
-	
-	bool VectorManager::Append(int varId, int data) 
+
+	void VectorManager::CreateVector(std::shared_ptr<Vector> newVector)
+	{
+		newVector->SetVectorId(++autoIncreasementId);
+		m_id2Vector.emplace(autoIncreasementId, newVector);
+	}
+
+	bool VectorManager::Append(int varId, int data)
 	{
 		// 아이디는 0 초과
 		if (varId <= 0)
@@ -26,39 +24,35 @@ namespace VectorSpace
 		{
 			return m_id2Vector[varId]->AddData(data);
 		}
-		else 
+		else
 		{
 			return false;
 		}
 	}
 
-	
-	void VectorManager::PrintInformation() 
-	{
-		// for each auto
-		for (int i = 0; i < autoIncreasementId; i++) 
-		{
-			for(auto element : m_id2Vector)
-			{
-				std::cout << "Vector (autoIncreasementId : " << element.second->GetVectorId() << ") " << "\n";
-				element.second->PrintData();
-			}
 
+	void VectorManager::PrintInformation()
+	{
+		for (const auto& element : m_id2Vector)
+		{
+			std::cout << "Vector (autoIncreasementId : " << element.second->GetVectorId() << ") " << "\n";
+			element.second->PrintData();
 		}
+
 		std::cout << "---------------------------------------" << "\n";
 	}
 
-	
-	bool VectorManager::DeleteDataInVector(int varId, int data) 
+
+	bool VectorManager::DeleteDataInVector(int varId, int data)
 	{
-		if (!m_id2Vector[varId])
+		if (const auto& isExistData = m_id2Vector[varId]; !isExistData)
 			return false;
 
 		return m_id2Vector[varId]->DeleteData(data);
 	}
 
-	
-	bool VectorManager::DeleteVector(int varId) 
+
+	bool VectorManager::DeleteVector(int varId)
 	{
 		if (varId <= 0)
 			return false;
