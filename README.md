@@ -1,7 +1,10 @@
 # cppBasic
 CPP 교육용
 
-> 자신의 Github ID로 Branch를 만들고 Pull Request를 통해 개발 진행
+> 1. Issue 생성
+> 2. 궁금증 및 발생할 문제들 기록할 것들 Issue에 기록
+> 3. Commit 시 Issue 걸어 Commit `Commit Title(Issue-Num)`
+> 4. 자신의 Github ID로 Branch를 만들고 Pull Request를 통해 개발 진행
 
 
 ## C++ 기본
