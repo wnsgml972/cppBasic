@@ -25,9 +25,9 @@ int main()
 
 	// Invalid
 	{
-	/*	if (auto check = vectorManager->Append(4, 5); !check)
+		if (auto check = vectorManager->Append(4, 5); !check)
 			PrintMessage("No ID");
-		*/
+		
 		// vectorManager->Append(0, 5); // Invalid ID´Â 0ÃÊ°ú assert
 	}
 

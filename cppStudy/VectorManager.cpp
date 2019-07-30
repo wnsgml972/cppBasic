@@ -45,7 +45,7 @@ namespace VectorSpace
 
 	bool VectorManager::DeleteDataInVector(int varId, int data)
 	{
-		if (const auto& isExistData = m_id2Vector[varId]; !isExistData)
+		if (const auto& isExistVector = m_id2Vector[varId]; !isExistVector)
 			return false;
 
 		return m_id2Vector[varId]->DeleteData(data);
