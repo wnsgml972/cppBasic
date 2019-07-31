@@ -18,23 +18,18 @@ namespace VectorSpace
 			std::cout << "Delete Vector" << std::endl;  
 		};
 
-		//데이터 추가
 		bool AddData(int data);
-		//데이터 삭제
 		bool DeleteData(int data);
 	
-		//현재 벡터의 데이터 출력
 		void PrintData();
-		//현재 데이터 개수 반환
-		int GetSize();
 
+		int GetSize();
 		void SetVectorId(int autoId);	
 		const int GetVectorId() const;
+
 	private:
-		//중복체크
 		std::optional<int> IsDuplicateDataInVectorReturnIdx(int data);
-		//삭제 후 데이터 재정렬
-		void ShiftLeftDataInVector(int index);
+		void ShiftLeftSortingAfterDeleteDataInVector(int index);
 
 		int m_vectorId;
 		int m_vectorSize;

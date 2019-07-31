@@ -20,27 +20,18 @@ namespace VectorSpace {
 			std::cout << "Delete Vector" << std::endl;
 		};
 
-		//데이터 추가		
 		bool AddData(Type data);
-
-		//데이터 삭제		
 		bool DeleteData(Type data);
 
-		//현재 벡터의 데이터 출력
-		//cf) alt+shift를 이용하면 세로로 편집가능 :)		
 		void PrintData();
-		//현재 데이터 개수 반환		
 		int GetSize() { return m_vectorSize; }
 
 		void SetVectorId(int autoId) { m_vectorId = autoId; }
 		const int GetVectorId() const{ return m_vectorId; }
 
 	private:
-		//중복체크
-		//decltype(auto) 정확한 데이터타입을 알아낼 수 있음		
 		std::optional<int> IsDuplicateDataInVectorReturnIdx(Type data);
-		//삭제 후 데이터 재정렬
-		void ShiftLeftDataInVector(int index);
+		void ShiftLeftSortingAfterDeleteDataInVector(int index);
 
 		int m_vectorId;
 		int m_vectorSize;
@@ -55,15 +46,12 @@ namespace VectorSpace {
 		VectorManager();
 		virtual ~VectorManager() { std::cout << "Delete VectorManager" << std::endl; };
 
-		//벡터 생성
 		void CreateVector(std::shared_ptr<Vector<Type>> newVector);
-		//생성된 백터에 데이터 추가
 		bool Append(int varId, Type data);
-		//모든 자료구조 정보 출력
+		
 		void PrintInformation();
-		//벡터 내에 있는 데이터 삭제
+		
 		bool DeleteDataInVector(int varId, Type data);
-		//벡터 삭제
 		bool DeleteVector(int varId);			
 
 	private:
@@ -89,7 +77,7 @@ namespace VectorSpace {
 	}
 
 	template <class Type>
-	void Vector<Type>::ShiftLeftDataInVector(int index) 
+	void Vector<Type>::ShiftLeftSortingAfterDeleteDataInVector(int index) 
 	{
 		for (int i = index; i < m_vectorSize; i++)
 		{
@@ -127,7 +115,7 @@ namespace VectorSpace {
 		if (const auto& index = IsDuplicateDataInVectorReturnIdx(data); index)
 		{
 			m_vectorSize--;
-			ShiftLeftDataInVector(*index);
+			ShiftLeftSortingAfterDeleteDataInVector(*index);
 
 			return true;
 		}
