@@ -5,13 +5,13 @@ namespace VectorSpace
 {
 	VectorManager::VectorManager()
 	{
-		autoIncreasementId = 0;
+		autoIncreasementVectorId = 0;
 	}
 
 	void VectorManager::CreateVector(std::shared_ptr<Vector> newVector)
 	{
-		newVector->SetVectorId(++autoIncreasementId);
-		m_id2Vector.emplace(autoIncreasementId, newVector);
+		newVector->SetVectorId(++autoIncreasementVectorId);
+		m_id2Vector.emplace(autoIncreasementVectorId, newVector);
 	}
 
 	bool VectorManager::Append(int varId, int data)
@@ -35,7 +35,7 @@ namespace VectorSpace
 	{
 		for (const auto& element : m_id2Vector)
 		{
-			std::cout << "Vector (autoIncreasementId : " << element.second->GetVectorId() << ") " << "\n";
+			std::cout << "Vector (autoIncreasementVectorId : " << element.second->GetVectorId() << ") " << "\n";
 			element.second->PrintData();
 		}
 
