@@ -50,7 +50,7 @@ namespace VectorSpace
 		if (const auto& index = IsDuplicateDataInVectorReturnIdx(data); index)
 		{
 			m_vectorSize--;
-			ShiftLeft(*index);
+			ShiftLeftDataInVector(*index);
 
 			return true;
 		}
@@ -59,7 +59,7 @@ namespace VectorSpace
 	}
 
 	//삭제 후 데이터 재정렬
-	void Vector::ShiftLeft(int index)
+	void Vector::ShiftLeftDataInVector(int index)
 	{
 		for (int i = index; i < m_vectorSize; i++)
 		{

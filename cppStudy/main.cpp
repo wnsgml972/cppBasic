@@ -12,23 +12,23 @@ int main()
 {
 	//Vector Template Test Code
 	{
-		std::unique_ptr<VectorSpace::VectorManager<int>> vectorTemplate = std::make_unique<VectorSpace::VectorManager<int>>();
-		std::unique_ptr<VectorSpace::VectorManager<double>> vectorTemplate2 = std::make_unique<VectorSpace::VectorManager<double>>();
+		std::unique_ptr<VectorSpace::VectorManager<int>> vectorManagerForIntType = std::make_unique<VectorSpace::VectorManager<int>>();
+		std::unique_ptr<VectorSpace::VectorManager<double>> vectorManagerForDoubleType = std::make_unique<VectorSpace::VectorManager<double>>();
 
 		//Initial 3 integer Vector
 		{
-			vectorTemplate->PrintInformation();
-			vectorTemplate->CreateVector(std::make_shared<VectorSpace::Vector<int>>());
-			vectorTemplate->PrintInformation();
-			vectorTemplate->CreateVector(std::make_shared<VectorSpace::Vector<int>>());
-			vectorTemplate->PrintInformation();
-			vectorTemplate->CreateVector(std::make_shared<VectorSpace::Vector<int>>());
-			vectorTemplate->PrintInformation();
+			vectorManagerForIntType->PrintInformation();
+			vectorManagerForIntType->CreateVector(std::make_shared<VectorSpace::Vector<int>>());
+			vectorManagerForIntType->PrintInformation();
+			vectorManagerForIntType->CreateVector(std::make_shared<VectorSpace::Vector<int>>());
+			vectorManagerForIntType->PrintInformation();
+			vectorManagerForIntType->CreateVector(std::make_shared<VectorSpace::Vector<int>>());
+			vectorManagerForIntType->PrintInformation();
 		}
 		
 		// Invalid
 		{
-			if (auto check = vectorTemplate->Append(4, 5); !check)
+			if (auto check = vectorManagerForIntType->Append(4, 5); !check)
 				PrintMessage("No ID");
 
 			// vectorManager->Append(0, 5); // Invalid ID´Â 0ÃÊ°ú assert
@@ -36,69 +36,69 @@ int main()
 
 		// ID : 1 Append Integer Vector
 		{
-			vectorTemplate->Append(1, 5);
-			vectorTemplate->Append(1, 7);
-			vectorTemplate->Append(1, 10);
-			vectorTemplate->PrintInformation();
+			vectorManagerForIntType->Append(1, 5);
+			vectorManagerForIntType->Append(1, 7);
+			vectorManagerForIntType->Append(1, 10);
+			vectorManagerForIntType->PrintInformation();
 		}
 		
 
 		// ID : 2 Append Integer Vector
 		{
-			vectorTemplate->Append(2, 5);
-			vectorTemplate->PrintInformation();
+			vectorManagerForIntType->Append(2, 5);
+			vectorManagerForIntType->PrintInformation();
 		}
 
 		// ID : 3 Append Integer Vector
 		{
-			vectorTemplate->Append(3, 555);
-			vectorTemplate->PrintInformation();
+			vectorManagerForIntType->Append(3, 555);
+			vectorManagerForIntType->PrintInformation();
 		}
 
 		
 
 		// Delete Data In Vector
 		{
-			if (auto check = vectorTemplate->DeleteDataInVector(3, 5); !check)
+			if (auto check = vectorManagerForIntType->DeleteDataInVector(3, 5); !check)
 				PrintMessage("No Data");
-			vectorTemplate->PrintInformation();
+			vectorManagerForIntType->PrintInformation();
 
-			if (auto check = vectorTemplate->DeleteDataInVector(3, 555); check)
+			if (auto check = vectorManagerForIntType->DeleteDataInVector(3, 555); check)
 				PrintMessage("Delete Data Success");
-			vectorTemplate->PrintInformation();
+			vectorManagerForIntType->PrintInformation();
 		}
 
 		// Delete Vector
 		{
-			if (auto check = vectorTemplate->DeleteVector(5); !check)
+			if (auto check = vectorManagerForIntType->DeleteVector(5); !check)
 				PrintMessage("Delete Vector Fail");
 
-			if (auto check = vectorTemplate->DeleteVector(1); check)
+			if (auto check = vectorManagerForIntType->DeleteVector(1); check)
 				PrintMessage("Delete Vector Success");
-			if (auto check = vectorTemplate->DeleteVector(2); check)
+			if (auto check = vectorManagerForIntType->DeleteVector(2); check)
 				PrintMessage("Delete Vector Success");
-			if (auto check = vectorTemplate->DeleteVector(3); check)
+			if (auto check = vectorManagerForIntType->DeleteVector(3); check)
 				PrintMessage("Delete Vector Success");
-			vectorTemplate->PrintInformation();
+			vectorManagerForIntType->PrintInformation();
 		}
 
 		//Initial 3 Double Vector
 		{
 			PrintMessage("----------Apeend Double Data--------------");
-			vectorTemplate2->PrintInformation();
-			vectorTemplate2->CreateVector(std::make_shared<VectorSpace::Vector<double>>());
-			vectorTemplate2->PrintInformation();
-			vectorTemplate2->CreateVector(std::make_shared<VectorSpace::Vector<double>>());
-			vectorTemplate2->PrintInformation();
-			vectorTemplate2->CreateVector(std::make_shared<VectorSpace::Vector<double>>());
-			vectorTemplate2->PrintInformation();
+			vectorManagerForDoubleType->PrintInformation();
+			vectorManagerForDoubleType->CreateVector(std::make_shared<VectorSpace::Vector<double>>());
+			vectorManagerForDoubleType->PrintInformation();
+			vectorManagerForDoubleType->CreateVector(std::make_shared<VectorSpace::Vector<double>>());
+			vectorManagerForDoubleType->PrintInformation();
+			vectorManagerForDoubleType->CreateVector(std::make_shared<VectorSpace::Vector<double>>());
+			vectorManagerForDoubleType->PrintInformation();
 		}
 		// ID : 4 Append Double Vector
 		{
-			vectorTemplate2->Append(1, 1.5);
-			vectorTemplate2->Append(1, 7.4);
-			vectorTemplate2->Append(1, 10.234);
-			vectorTemplate2->PrintInformation();
+			vectorManagerForDoubleType->Append(1, 1.5);
+			vectorManagerForDoubleType->Append(1, 7.4);
+			vectorManagerForDoubleType->Append(1, 10.234);
+			vectorManagerForDoubleType->PrintInformation();
 		}
 	}
 

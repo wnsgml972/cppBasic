@@ -10,17 +10,6 @@ namespace VectorSpace {
 
 	template <class Type>
 	class Vector {
-	private:
-		//중복체크
-		//decltype(auto) 정확한 데이터타입을 알아낼 수 있음		
-		std::optional<int> IsDuplicateDataInVectorReturnIdx(Type data);
-		//삭제 후 데이터 재정렬
-		void ShiftLeft(int index);
-
-		int m_vectorId;
-		int m_vectorSize;
-		Type *m_pData;
-
 	public:
 		Vector();
 		virtual ~Vector() 
@@ -46,14 +35,22 @@ namespace VectorSpace {
 		void SetVectorId(int autoId) { m_vectorId = autoId; }
 		const int GetVectorId() const{ return m_vectorId; }
 
+	private:
+		//중복체크
+		//decltype(auto) 정확한 데이터타입을 알아낼 수 있음		
+		std::optional<int> IsDuplicateDataInVectorReturnIdx(Type data);
+		//삭제 후 데이터 재정렬
+		void ShiftLeftDataInVector(int index);
+
+		int m_vectorId;
+		int m_vectorSize;
+		Type *m_pData;
+
+
 	};
 	template <class Type>
 	class VectorManager
 	{
-	private:
-		std::map<int, std::shared_ptr<Vector<Type>>> m_id2Vector{};
-		int autoIncreasementId;// Vector Id
-
 	public:
 		VectorManager();
 		virtual ~VectorManager() { std::cout << "Delete VectorManager" << std::endl; };
@@ -67,7 +64,11 @@ namespace VectorSpace {
 		//벡터 내에 있는 데이터 삭제
 		bool DeleteDataInVector(int varId, Type data);
 		//벡터 삭제
-		bool DeleteVector(int varId);			   		
+		bool DeleteVector(int varId);			
+
+	private:
+		std::map<int, std::shared_ptr<Vector<Type>>> m_id2Vector{};
+		int autoIncreasementVectorId;
 	
 	};
 
@@ -88,7 +89,7 @@ namespace VectorSpace {
 	}
 
 	template <class Type>
-	void Vector<Type>::ShiftLeft(int index) 
+	void Vector<Type>::ShiftLeftDataInVector(int index) 
 	{
 		for (int i = index; i < m_vectorSize; i++)
 		{
@@ -126,7 +127,7 @@ namespace VectorSpace {
 		if (const auto& index = IsDuplicateDataInVectorReturnIdx(data); index)
 		{
 			m_vectorSize--;
-			ShiftLeft(*index);
+			ShiftLeftDataInVector(*index);
 
 			return true;
 		}
@@ -154,14 +155,14 @@ namespace VectorSpace {
 	template <class Type>
 	VectorManager<Type>::VectorManager() 
 	{
-		autoIncreasementId = 0;
+		autoIncreasementVectorId = 0;
 	}
 
 	template <class Type>
 	void VectorManager<Type>::CreateVector(std::shared_ptr<Vector<Type>> newVector) 
 	{
-		newVector->SetVectorId(++autoIncreasementId);
-		m_id2Vector.emplace(autoIncreasementId, newVector);
+		newVector->SetVectorId(++autoIncreasementVectorId);
+		m_id2Vector.emplace(autoIncreasementVectorId, newVector);
 	}
 
 	template <class Type>
@@ -185,7 +186,7 @@ namespace VectorSpace {
 	{
 		for (const auto& element : m_id2Vector) 
 		{
-			std::cout << "Vector (autoIncreasementId : " << element.second->GetVectorId() << ") " << "\n";
+			std::cout << "Vector (autoIncreasementVectorId : " << element.second->GetVectorId() << ") " << "\n";
 			element.second->PrintData();
 		}
 		

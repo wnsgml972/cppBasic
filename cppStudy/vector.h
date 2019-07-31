@@ -34,7 +34,7 @@ namespace VectorSpace
 		//중복체크
 		std::optional<int> IsDuplicateDataInVectorReturnIdx(int data);
 		//삭제 후 데이터 재정렬
-		void ShiftLeft(int index);
+		void ShiftLeftDataInVector(int index);
 
 		int m_vectorId;
 		int m_vectorSize;

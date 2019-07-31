@@ -30,6 +30,6 @@ namespace VectorSpace
 
 	private :
 		std::map<int, std::shared_ptr<Vector>> m_id2Vector;
-		int autoIncreasementId;// Vector Id
+		int autoIncreasementVectorId;// Vector Id
 	};
 }
