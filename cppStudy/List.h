@@ -3,17 +3,20 @@
 
 namespace vectorListSpace {
 
+	class Node {
+	public:
+		Node *m_nextNode = nullptr;
+		int m_data;
+	};
 
-	class Vector : public BaseVectorList {
+	class List : public BaseVectorList {
 
 
 
 	public:
-
-
-		Vector();
-		~Vector();
-	
+		
+		List();
+		~List();
 
 		bool AddData(int data);
 		bool DeleteData(int data);
@@ -22,16 +25,8 @@ namespace vectorListSpace {
 		const void PrintData();
 
 
-
 	private:
-		
-		int getDataIndex(int data);
-		bool leftShiftData(int index);
-		
-		int m_cnt;
-		int *m_data;
-
-
+		Node *m_head;
 
 	};
 

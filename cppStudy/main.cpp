@@ -1,97 +1,105 @@
 
-#include "vector.h"
+#include "List.h"
+#include "Vector.h"
 #include <iostream>
 #include <memory>
-
-
 
 
 int main() 
 {
 
-	std::unique_ptr<vectorNameSpace::Vector> test = std::make_unique<vectorNameSpace::Vector>();
-	
-	
-	test->AddData(1);
-	test->AddData(2);
-
-
-	test->PrintData();
-
-	std::cout<<"vectorSize : "<<test->GetSize()<<std::endl;
-
-
-
-	if (!test->AddData(2)) {
-		std::cout << "입력 실패\n";
-	}
-	test->DeleteData(2);
-	
-
-	if(!test->DeleteData(2)) {
-		std::cout << "삭제 실패\n";
-	}
-	
-	test->PrintData();
-
-	std::cout << "vectorSize : " << test->GetSize() << std::endl;
-
-	
-	test->AddData(3);
-
-	test->AddData(5);
-
-	test->PrintData();
-
-	std::cout << "vectorSize : " << test->GetSize() << std::endl;
-
-	
-
-
-	// DataManager 예제
 	{
-		// std::smart_pointer<DataManager> dataManager = std::make_shared<DataManager>();
-		// dataManager->CreateVector(std::make_shared<V>()); 1
-		// dataManager->CreateVector(std::make_shared<V>()); 2  4
-		// dataManager->CreateVector(std::make_shared<V>()); 3
+		std::unique_ptr<vectorListSpace::BaseVectorList> test = std::make_unique<vectorListSpace::List>();
 
-		// dataManager->Append(2, 4); id, data
 
-		// dataManager->PrintData(); 
+		test->AddData(1);
+		test->AddData(2);
 
-		// if(dataManager->Delete(2, 3) ;
 
-		// dataManager->PrintData(); 
+		test->PrintData();
+
+		std::cout << "ListSize : " << test->GetSize() << std::endl;
+
+
+
+		if (!test->AddData(2)) {
+			std::cout << "입력 실패\n";
+		}
+		test->DeleteData(2);
+
+
+		if (!test->DeleteData(2)) {
+			std::cout << "삭제 실패\n";
+		}
+
+		test->PrintData();
+
+		std::cout << "ListSize : " << test->GetSize() << std::endl;
+
+
+		test->AddData(3);
+
+		test->AddData(5);
+
+		test->PrintData();
+
+		std::cout << "ListSize : " << test->GetSize() << std::endl;
+
 	}
-
-	// Next DataManager Template 예제
+	
 	{
-		// double
-		// std::smart_pointer<DataManager> dataManager = std::make_shared<DataManager>();
-		// dataManager->CreateVector(std::make_shared<V>()); 1
-		// dataManager->CreateVector(std::make_shared<V>()); 2  4
-		// dataManager->CreateVector(std::make_shared<V>()); 3
+		std::unique_ptr<vectorListSpace::BaseVectorList> test2 = std::make_unique<vectorListSpace::Vector>();
 
-		// dataManager->Append(2, 4.3); id, data
 
-		// dataManager->PrintData(); 
+		test2->AddData(1);
+		test2->AddData(2);
+		test2->AddData(3);
 
-		// if(dataManager->Delete(2, 3.2) ;
+		test2->PrintData();
 
-		// dataManager->PrintData(); 
+		std::cout << "VectorSize : " << test2->GetSize() << std::endl;
 
-		// int
-		// std::smart_pointer<DataManager> dataManager = std::make_shared<DataManager>();
-		// dataManager->CreateVector(std::make_shared<V>()); 1
-		// dataManager->CreateVector(std::make_shared<V>()); 2  4
-		// dataManager->CreateVector(std::make_shared<V>()); 3
 
-		// dataManager->Append(2, 4); id, data
 
-		// dataManager->PrintData(); 
+		if (!test2->AddData(2)) {
+			std::cout << "입력 실패\n";
+		}
+		test2->DeleteData(2);
 
-		// if(dataManager->Delete(2, 3) ;
+		
 
-		// dataManager->PrintData(); 
+		if (!test2->DeleteData(2)) {
+			std::cout << "삭제 실패\n";
+		}
+
+		test2->PrintData();
+
+		std::cout << "VectorSize : " << test2->GetSize() << std::endl;
+
+
+		test2->AddData(2);
+		
+		test2->AddData(4);
+		test2->AddData(5);
+		test2->AddData(6);
+		test2->AddData(7);
+		test2->AddData(8);
+		test2->AddData(9);
+		test2->AddData(10);
+		test2->PrintData();
+		test2->AddData(11);
+
+		test2->PrintData();
+		std::cout << "VectorSize : " << test2->GetSize() << std::endl;
+
+		test2->DeleteData(11);
+		test2->DeleteData(10);
+		test2->DeleteData(9);
+
+		test2->PrintData();
+		std::cout << "VectorSize : " << test2->GetSize() << std::endl;
+		
 	}
+	return 0;
+
 }

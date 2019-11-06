@@ -1,83 +1,137 @@
-#include "vector.h"
+#include "Vector.h"
 #include <iostream>
-namespace vectorNameSpace {
+
+
+//vector array size 크기 기준 
+#define DATA_ARRAY_SIZE 10
+
+#define NOT_FOUND_INDEX -1
+
+namespace vectorListSpace {
+	
+
+	
+	Vector::Vector()
+	{
+		
+		m_data = (int *)malloc(sizeof(int) * DATA_ARRAY_SIZE) ;
+		
+		m_cnt = 0;
+
+	}
+	
+	Vector::~Vector()
+	{
+		std::cout << "해제?";
+
+		free(m_data);
+	}
+
+
 
 	bool Vector::AddData(int data) {
 
-
-		//중복검사+ 데이터가 들어갈 위치 찾아놓기
-		Node *searchNode = m_head;
-		while (searchNode->m_nextNode != nullptr) {
-			searchNode = searchNode->m_nextNode;
-			if (searchNode->m_data == data) {
-				return false;
-			}
+		if (getDataIndex(data) != NOT_FOUND_INDEX) {
+			return false;
 		}
 
 
+		//데이터가 꽉 찾을 경우에 배열 크기 조정
+		if (m_cnt % DATA_ARRAY_SIZE == 0) {
 
-		Node *addNode = new Node();
-		addNode->m_data = data;
-		addNode->m_nextNode = nullptr;
+			int changeSize = m_cnt+DATA_ARRAY_SIZE;
+			
+			m_data = (int *)realloc(m_data,sizeof(int) * changeSize);
 
-		
-		searchNode->m_nextNode = addNode;
-		
+
+
+		}
+
+		m_data[m_cnt] = data;
+		m_cnt++;
+
+
 		return true;
 	}
+
 	bool Vector::DeleteData(int data) {
 
-		Node *searchNode = m_head;
+
+		int index = getDataIndex(data);
+
+		if (index == NOT_FOUND_INDEX) {
+			return false;
+		}
+		
+		leftShiftData(index);
+		
+		m_cnt--;
 
 
+		
 
-		while (searchNode->m_nextNode != nullptr) {
+		//데이터칸수가 줄어들게 되면 사이즈 조정
+		if (m_cnt % DATA_ARRAY_SIZE == 0) {
+
+			int changeSize = m_cnt;
 			
-			if (searchNode->m_nextNode->m_data == data) {
-				
-				
-				
-				Node * deleteNode = searchNode->m_nextNode;
-				searchNode->m_nextNode = deleteNode->m_nextNode;
-				delete deleteNode;
-
-				return true;
-			}
-			searchNode = searchNode->m_nextNode;
-
+			
+			m_data = (int *)realloc(m_data, sizeof(int) * changeSize);
+		
 		}
 
-		return false;
+
+
+
+		return true;
 	}
 
 	int Vector::GetSize() {
-		int cnt = 0;
 
-		Node *searchNode = m_head;
-		while (searchNode->m_nextNode != nullptr) {
-			searchNode = searchNode->m_nextNode;
-			cnt++;
-		}
-		return cnt;
-
-
+		return m_cnt;
 	}
 
 
 	const void Vector::PrintData() {
-		std::cout << "vectorData : ";
 
-		Node *searchNode = m_head;
-		while (searchNode->m_nextNode != nullptr) {
-			searchNode = searchNode->m_nextNode;
 
-			std::cout << searchNode->m_data<<"  ";
+		std::cout << "VectorData : ";
 
+		for (int i = 0; i < m_cnt; i++) {
+			std::cout << m_data[i] << "  ";
 		}
 
 		std::cout << "\n";
 
 	}
 
-	
+
+	int Vector::getDataIndex(int data) {
+
+		for (int i = 0; i < m_cnt; i++){
+			if (m_data[i] == data) {
+				return i;
+			}
+		}
+
+		return NOT_FOUND_INDEX;
+
+	}
+
+	bool Vector::leftShiftData(int index)
+	{
+		if (index < 0 || index >= m_cnt) {
+			return false;
+		}
+
+		for (int i = index; i < m_cnt - 1; i++){
+			m_data[i] = m_data[i + 1];
+		}
+
+		m_data[m_cnt - 1] = NULL;
+
+		return true;
+	}
+
+
 }
