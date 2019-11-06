@@ -8,12 +8,12 @@ CPP 교육용
 
 
 ## C++ 기본
-- [ ] C-Style로 구현 (클래스 사용말고, 구조체와 함수 사용)  
-- [ ] DataType int형  
-- [ ] 삽입,삭제 가능해야함  
-- [ ] Stack 구현 함수 : Push, Pop, SetSize  
-- [ ] List 구현 함수 : AddHead, AddTail, DeleteHead, DeleteTail)  
-- [ ] PrintInfomation - 전체 정보 출력 함수 제공"  
+- [x] C-Style로 구현 (클래스 사용말고, 구조체와 함수 사용)  
+- [x] DataType int형  
+- [x] 삽입,삭제 가능해야함  
+- [x] Stack 구현 함수 : push, pop, getSize  
+- [x] List 구현 함수 : addHead, addTail, deleteHead, deleteTail)  
+- [x] printInfomation - 전체 정보 출력 함수 제공"  
   
 <br/>
 
@@ -37,7 +37,7 @@ CPP 교육용
 ### DataManager 클래스 구현
 - [ ] 생성/삭제되는 Vector/List 정보를 관리
 - [ ] GetSize - 전체 자료구조의 갯수를 반환
-- [ ] PrintInfomation - 전체 자료구조의 정보 출력
+- [ ] PrintInformation - 전체 자료구조의 정보 출력
 
 ### Reference
 * <https://github.com/wnsgml972/midas_log/blob/master/contents/BasicEducation/CppBasic.md>
