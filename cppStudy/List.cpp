@@ -47,7 +47,8 @@ namespace vectorListSpace {
 	}
 	bool List::DeleteData(int data) {
 
-		Node *searchNode = m_head;
+		Node *searchNode = new Node();
+		searchNode->m_nextNode = m_head;
 
 
 

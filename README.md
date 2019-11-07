@@ -21,7 +21,7 @@ CPP 교육용
 ### 조건
 - [ ] C++ Style Casting 사용  
 - [ ] auto, decltype(auto) 사용  
-- [x] 스마트 포인터 사용  
+- [ ] 스마트 포인터 사용  
 - [ ] 람다 사용해보기
 ### Vector/List 클래스 구현
 - [x] DataType int형  
@@ -35,9 +35,9 @@ CPP 교육용
 - [x] 변수는 private, 함수는 public  
 - [x] 상속을 통해 기반 클래스는 동일하게 구현  
 ### DataManager 클래스 구현
-- [ ] 생성/삭제되는 Vector/List 정보를 관리
-- [ ] GetSize - 전체 자료구조의 갯수를 반환
-- [ ] PrintInformation - 전체 자료구조의 정보 출력
+- [x] 생성/삭제되는 Vector/List 정보를 관리
+- [x] GetSize - 전체 자료구조의 갯수를 반환
+- [x] PrintInformation - 전체 자료구조의 정보 출력
 
 ### Reference
 * <https://github.com/wnsgml972/midas_log/blob/master/contents/BasicEducation/CppBasic.md>
