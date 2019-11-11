@@ -148,6 +148,7 @@ CMyData& operator=(const CMyData &rhs);
 //a=b=c 연산을 대비하기 위해 주소를 반환한다
 int operator[](int nIndex) const
 // 배열도 가능, !=, ==, 비교연산자도 가능 웬만한거 다 가능??!!!!
+// 연산자 오버로딩 덕에 String비교도 == 사용 가능하다!!!!!!!
 ```
 
 ### 캐스트

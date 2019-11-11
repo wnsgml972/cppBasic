@@ -36,14 +36,14 @@ namespace StackSpace {
 
 		int cnt = 0;
 
-
 		while (searchNode->underNode != nullptr) {
+
 			searchNode = searchNode->underNode;
 			cnt++;
-		
+
 		}
 		return cnt;
-		
+
 	}
 
 	void printInformation() {
@@ -51,10 +51,10 @@ namespace StackSpace {
 		stackNode *searchNode = stackHead;
 
 		while (searchNode != nullptr) {
-			
+
 			std::cout << searchNode->data << "  ";
 			searchNode = searchNode->underNode;
-			
+
 		}
 
 

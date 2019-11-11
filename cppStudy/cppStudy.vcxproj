@@ -161,13 +161,9 @@
     <ClInclude Include="BaseVectorList.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BaseVectorList.cpp" />
     <ClCompile Include="DoubleList.cpp" />
-    <ClCompile Include="List.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Stack.cpp" />
-    <ClCompile Include="VectorManager.cpp" />
-    <ClCompile Include="Vector.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

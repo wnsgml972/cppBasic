@@ -1,9 +1,11 @@
 
-#include "List.h"
-#include "Vector.h"
 #include "Stack.h"
 #include "DoubleList.h"
-#include "VectorManager.h"
+
+#include "Vector.h"
+#include "List.h"
+#include "VectorManager.h" //템플릿을 사용하려면 cpp를 import 해야 한다?
+
 
 #include <iostream>
 #include <memory>
@@ -16,45 +18,45 @@ int main()
 {
 	//List 검증
 
-	//{
-	//	std::unique_ptr<vectorListSpace::BaseVectorList> test = std::make_unique<vectorListSpace::List>();
+	/*{
+		std::unique_ptr<vectorListSpace::BaseVectorList<int>> test = std::make_unique<vectorListSpace::List<int>>();
 
 
-	//	test->AddData(1);
-	//	test->AddData(2);
+		test->AddData(1);
+		test->AddData(2);
 
 
-	//	test->PrintData();
+		test->PrintData();
 
-	//	std::cout << "ListSize : " << test->GetSize() << std::endl;
-
-
-
-	//	if (!test->AddData(2)) {
-	//		std::cout << "입력 실패\n";
-	//	}
-	//	test->DeleteData(2);
+		std::cout << "ListSize : " << test->GetSize() << std::endl;
 
 
-	//	if (!test->DeleteData(2)) {
-	//		std::cout << "삭제 실패\n";
-	//	}
 
-	//	test->PrintData();
-
-	//	std::cout << "ListSize : " << test->GetSize() << std::endl;
+		if (!test->AddData(2)) {
+			std::cout << "입력 실패\n";
+		}
+		test->DeleteData(2);
 
 
-	//	test->AddData(3);
+		if (!test->DeleteData(2)) {
+			std::cout << "삭제 실패\n";
+		}
 
-	//	test->AddData(5);
+		test->PrintData();
 
-	//	test->PrintData();
+		std::cout << "ListSize : " << test->GetSize() << std::endl;
 
-	//	std::cout << "ListSize : " << test->GetSize() << std::endl;
 
-	//}
-	//
+		test->AddData(3);
+
+		test->AddData(5);
+
+		test->PrintData();
+
+		std::cout << "ListSize : " << test->GetSize() << std::endl;
+
+	}*/
+
 
 	////Vector 검증
 	//{
@@ -154,16 +156,22 @@ int main()
 
 	//}
 
+
+
+
 	//Manager 검증
 	{
-		vectorListSpace::BaseVectorList *t1 = new vectorListSpace::List();
-		vectorListSpace::BaseVectorList *t2 = new vectorListSpace::List();
-		vectorListSpace::BaseVectorList *t3 = new vectorListSpace::List();
-		vectorListSpace::BaseVectorList *t4 = new vectorListSpace::List();
-		vectorListSpace::BaseVectorList *t5 = new vectorListSpace::List();
-		vectorListSpace::BaseVectorList *t6 = new vectorListSpace::List();
+		// namespace naming snake 소문자_
+		vectorListSpace::BaseVectorList<int> *t1 = new vectorListSpace::List<int>();
+		vectorListSpace::BaseVectorList<int> *t2 = new vectorListSpace::List<int>();
+		vectorListSpace::BaseVectorList<int> *t3 = new vectorListSpace::List<int>();
+		vectorListSpace::BaseVectorList<int> *t4 = new vectorListSpace::List<int>();
+		vectorListSpace::BaseVectorList<int> *t5 = new vectorListSpace::List<int>();
+		vectorListSpace::BaseVectorList<int> *t6 = new vectorListSpace::List<int>();
 
-		std::unique_ptr<dataManagerSpace::DataManager> d1 = std::make_unique<dataManagerSpace::DataManager>();
+		std::unique_ptr<dataManagerSpace::DataManager<int>> d1 = std::make_unique<dataManagerSpace::DataManager<int>>();
+
+		
 
 		d1->newVectorList(t1);
 		d1->newVectorList(t2);
@@ -191,6 +199,8 @@ int main()
 
 		std::cout << "size : " << d1->GetSize() << " \n";
 		d1->PrintData();
+
+
 
 	}
 
