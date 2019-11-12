@@ -19,7 +19,7 @@ int main()
 	//List 검증
 
 	/*{
-		std::unique_ptr<vectorListSpace::BaseVectorList<int>> test = std::make_unique<vectorListSpace::List<int>>();
+		std::unique_ptr<vectorListSpace::Base<int>> test = std::make_unique<vectorListSpace::List<int>>();
 
 
 		test->AddData(1);
@@ -60,7 +60,7 @@ int main()
 
 	////Vector 검증
 	//{
-	//	std::unique_ptr<vectorListSpace::BaseVectorList> test2 = std::make_unique<vectorListSpace::Vector>();
+	//	std::unique_ptr<vectorListSpace::Base> test2 = std::make_unique<vectorListSpace::Vector>();
 
 
 	//	test2->AddData(1);
@@ -159,17 +159,17 @@ int main()
 
 
 
-	//Manager 검증
+	////Manager 검증
 	{
 		// namespace naming snake 소문자_
-		vectorListSpace::BaseVectorList<int> *t1 = new vectorListSpace::List<int>();
-		vectorListSpace::BaseVectorList<int> *t2 = new vectorListSpace::List<int>();
-		vectorListSpace::BaseVectorList<int> *t3 = new vectorListSpace::List<int>();
-		vectorListSpace::BaseVectorList<int> *t4 = new vectorListSpace::List<int>();
-		vectorListSpace::BaseVectorList<int> *t5 = new vectorListSpace::List<int>();
-		vectorListSpace::BaseVectorList<int> *t6 = new vectorListSpace::List<int>();
+		VectorList::Base<int> *t1 = new VectorList::List<int>();
+		VectorList::Base<int> *t2 = new VectorList::List<int>();
+		VectorList::Base<int> *t3 = new VectorList::List<int>();
+		VectorList::Base<int> *t4 = new VectorList::List<int>();
+		VectorList::Base<int> *t5 = new VectorList::List<int>();
+		VectorList::Base<int> *t6 = new VectorList::List<int>();
 
-		std::unique_ptr<dataManagerSpace::DataManager<int>> d1 = std::make_unique<dataManagerSpace::DataManager<int>>();
+		std::unique_ptr<Manager::DataManager<int>> d1 = std::make_unique<Manager::DataManager<int>>();
 
 		
 

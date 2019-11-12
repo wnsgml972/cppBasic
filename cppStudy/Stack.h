@@ -1,17 +1,17 @@
-namespace StackSpace {
+namespace Stack {
 
 
-	struct stackNode {
-		int data;
-		stackNode *underNode = nullptr;
+	struct StackNode {
+		int data = {};
+		StackNode *pUnderNode = {};
 	};
 
 	
 	
 	
 
-	void stackPush(int data);
-	void stackPop();
-	int getSize();
-	void printInformation();
+	void PushStack(const int& data);
+	void PopStack();
+	int GetSize();
+	void PrintInformation();
 }

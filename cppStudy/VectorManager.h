@@ -1,13 +1,14 @@
-#include "BaseVectorList.h"
-namespace dataManagerSpace {
+#include "Base.h"
+namespace Manager {
 
 
 	template <typename T>
-	class ManagerNode {
+	struct ManagerNode {
 	public:
-		int m_id;
-		vectorListSpace::BaseVectorList<T> *vectorlist;
-		ManagerNode *m_nextNode = nullptr;
+		int id = {};
+
+		VectorList::Base<T> *vectorlist;
+		ManagerNode *pNextNode = nullptr;
 		
 	};
 
@@ -21,10 +22,10 @@ namespace dataManagerSpace {
 		DataManager();
 		~DataManager();
 		
-		int newVectorList(vectorListSpace::BaseVectorList<T> *vectorlist);
-		bool deleteVectorList(T id);
-		bool AddData(T id,T data);
-		bool DeleteData(T id, T data);
+		int newVectorList(VectorList::Base<T> *vectorlist);
+		bool deleteVectorList(int id);
+		bool AddData(int id,T data);
+		bool DeleteData(int id, T data);
 		
 		int GetSize();
 		void PrintData();
@@ -32,10 +33,10 @@ namespace dataManagerSpace {
 
 	private:
 		
-		vectorListSpace::BaseVectorList<T>* getBaseVectorList(T id);
+		VectorList::Base<T>* getBase(T id);
 		
 		ManagerNode<T> *m_head;
-		int m_id_cnt;
+		int id_cnt;
 
 
 
@@ -58,7 +59,7 @@ namespace dataManagerSpace {
 
 			tmpNode = searchNode;
 
-			searchNode = searchNode->m_nextNode;
+			searchNode = searchNode->pNextNode;
 
 
 			delete tmpNode;
@@ -68,17 +69,17 @@ namespace dataManagerSpace {
 
 
 	template <typename T>
-	int DataManager<T>::newVectorList(vectorListSpace::BaseVectorList<T> *vectorlist) {
+	int DataManager<T>::newVectorList(VectorList::Base<T> *vectorlist) {
 
 		ManagerNode<T> *newNode = new ManagerNode<T>();
 		newNode->vectorlist = vectorlist;
-		newNode->m_id = m_id_cnt;
+		newNode->id = id_cnt;
 
-		newNode->m_nextNode = m_head;
+		newNode->pNextNode = m_head;
 		m_head = newNode;
 
 
-		return m_id_cnt++;
+		return id_cnt++;
 
 
 	}
@@ -87,18 +88,18 @@ namespace dataManagerSpace {
 	//백터리스트 삭제하는것, 그리고 매니저 검증
 
 	template <typename T>
-	bool DataManager<T>::deleteVectorList(T id) {
+	bool DataManager<T>::deleteVectorList(int id) {
 
 		ManagerNode<T> *searchNode = new ManagerNode<T>();
 
-		searchNode->m_nextNode = m_head;
+		searchNode->pNextNode = m_head;
 
 
-		while (searchNode->m_nextNode != nullptr) {
-			if (searchNode->m_nextNode->m_id == id) {
+		while (searchNode->pNextNode != nullptr) {
+			if (searchNode->pNextNode->id == id) {
 
-				ManagerNode *deleteNode = searchNode->m_nextNode;
-				searchNode->m_nextNode = deleteNode->m_nextNode;
+				ManagerNode *deleteNode = searchNode->pNextNode;
+				searchNode->pNextNode = deleteNode->pNextNode;
 				delete deleteNode;
 
 				return true;
@@ -110,26 +111,26 @@ namespace dataManagerSpace {
 
 
 	template <typename T>
-	bool DataManager<T>::AddData(T id, T data) {
-		vectorListSpace::BaseVectorList<T> *baseVectorList = getBaseVectorList(id);
+	bool DataManager<T>::AddData(int id, T data) {
+		VectorList::Base<T> *Base = getBase(id);
 
-		if (baseVectorList == nullptr) {
+		if (Base == nullptr) {
 			return false;
 		}
 
-		return baseVectorList->AddData(data);
+		return Base->AddData(data);
 
 
 	}
 
 	template <typename T>
-	bool DataManager<T>::DeleteData(T id, T data) {
-		vectorListSpace::BaseVectorList<T> *baseVectorList = getBaseVectorList(id);
+	bool DataManager<T>::DeleteData(int id, T data) {
+		VectorList::Base<T> *Base = getBase(id);
 
-		if (baseVectorList == nullptr) {
+		if (Base == nullptr) {
 			return false;
 		}
-		return baseVectorList->DeleteData(data);
+		return Base->DeleteData(data);
 	}
 
 	template <typename T>
@@ -138,7 +139,7 @@ namespace dataManagerSpace {
 		int cnt = 0;
 		while (searchNode != nullptr) {
 			cnt += searchNode->vectorlist->GetSize();
-			searchNode = searchNode->m_nextNode;
+			searchNode = searchNode->pNextNode;
 		}
 
 		return cnt;
@@ -149,21 +150,21 @@ namespace dataManagerSpace {
 		ManagerNode<T> *searchNode = m_head;
 
 		while (searchNode != nullptr) {
-			std::cout << searchNode->m_id << "번 아이디-";
+			std::cout << searchNode->id << "번 아이디-";
 			searchNode->vectorlist->PrintData();
-			searchNode = searchNode->m_nextNode;
+			searchNode = searchNode->pNextNode;
 		}
 	}
 
 	template <typename T>
-	vectorListSpace::BaseVectorList<T>* DataManager<T>::getBaseVectorList(T id) {
+	VectorList::Base<T>* DataManager<T>::getBase(T id) {
 		ManagerNode<T> *searchNode = m_head;
 		while (searchNode != nullptr) {
 
-			if (searchNode->m_id == id) {
+			if (searchNode->id == id) {
 				return searchNode->vectorlist;
 			}
-			searchNode = searchNode->m_nextNode;
+			searchNode = searchNode->pNextNode;
 
 		}
 

@@ -1,77 +1,70 @@
 #include "DoubleList.h"
 #include <iostream>
-namespace DoubleListSpace {
+namespace DoubleList {
 
-	listNode *listHead = nullptr;
-	listNode *listTail = nullptr;
+	DoubleListNode *listHead = {};
+	DoubleListNode *listTail = {};
 
 
-	void addHead(int data){
-		listNode *newNode = new listNode();
+	void AddHead(const int& data){
+		DoubleListNode *newNode = new DoubleListNode();
 		newNode->data = data;
 
-
-
-
-		//아무것도 없으면 tail이 가르키는 값도 확인
+		//아무것도 없으면 tail이 가르키는 값으로도 연결
 		if (listHead == nullptr) {
 			listTail = newNode;
 		}
 		else {
-			listHead->prevNode = newNode;
+			listHead->dpPrevNode = newNode;
 		}
 
-		newNode->nextNode = listHead;
+		newNode->dpNextNode = listHead;
 		listHead = newNode;
 
 
 
 	}
 
-	void addTail(int data){
+	void AddTail(const int& data){
 		
-
-
-		listNode *newNode = new listNode();
+		DoubleListNode *newNode = new DoubleListNode();
 		newNode->data = data;
 
 
-
-
-		//아무것도 없으면 tail이 가르키는 값도 확인
+		//아무것도 없으면 Head이 가르키는 값으로도 연결
 		if (listTail == nullptr) {
 			listHead = newNode;
 		}
 		else {
-			listTail->nextNode = newNode;
+			listTail->dpNextNode = newNode;
 		}
 
-		newNode->prevNode = listTail;
+		newNode->dpPrevNode = listTail;
 		listTail = newNode;
 
 	}
 
-	void deleteHead(){
+	void DeleteHead(){
 		if (listHead == nullptr) {
 			return;
 		}
 
 
 
-		listNode *tmpNode = listHead->nextNode;
+		DoubleListNode *tmpNode = listHead->dpNextNode;
 		delete listHead;
 		listHead = tmpNode;
 
-
+		
 		if (listHead == nullptr) {
-			listTail = nullptr;
+			listTail = {};
 		}
 		else {
-			listHead->prevNode = nullptr;
+			listHead->dpPrevNode = {};
 		}
 	}
 
-	void deleteTail(){
+	void DeleteTail(){
 	
 
 		if (listTail == nullptr) {
@@ -80,7 +73,7 @@ namespace DoubleListSpace {
 
 
 
-		listNode *tmpNode = listTail->prevNode;
+		DoubleListNode *tmpNode = listTail->dpPrevNode;
 		delete listTail;
 		listTail = tmpNode;
 
@@ -89,21 +82,21 @@ namespace DoubleListSpace {
 			listHead = nullptr;
 		}
 		else {
-			listTail->nextNode = nullptr;
+			listTail->dpNextNode = {};
 		}
 
 	}
 
-	void printInformation(){
+	void PrintInformation(){
 		std::cout << "doublie list node(head부터) : ";
 
 
-		listNode *searchNode = listHead;
+		DoubleListNode *searchNode = listHead;
 
 		while (searchNode != nullptr) {
 
 			std::cout << searchNode->data << "  ";
-			searchNode = searchNode->nextNode;
+			searchNode = searchNode->dpNextNode;
 
 		}
 

@@ -1,16 +1,16 @@
-#include "BaseVectorList.h"
-#define DATA_ARRAY_SIZE 10
-#define NOT_FOUND_INDEX -1
+#include "Base.h"
+#define VECTOR_DATA_SIZE 10
+#define VECTOR_NOT_FOUND_INDEX -1
 
 
-namespace vectorListSpace {
+namespace VectorList {
 
 
 
 
 
 	template <typename T>
-	class Vector : public BaseVectorList<T> {
+	class Vector : public Base<T> {
 
 
 
@@ -23,16 +23,16 @@ namespace vectorListSpace {
 
 		bool AddData(T data);
 		bool DeleteData(T data);
-		int GetSize();
+		int GetSize() const;
 
-		const void PrintData() const;
+		void PrintData() const;
 
 
 
 	private:
 		
-		int getDataIndex(T data);
-		bool leftShiftData(int index);
+		int GetDataIndex(T data);
+		bool ShiftLeftData(int index);
 		
 		int m_cnt;
 		T *m_data;
@@ -46,7 +46,7 @@ namespace vectorListSpace {
 	Vector<T>::Vector()
 	{
 
-		m_data = (T *)malloc(sizeof(T) * DATA_ARRAY_SIZE);
+		m_data = (T *)malloc(sizeof(T) * VECTOR_DATA_SIZE);
 
 		m_cnt = 0;
 
@@ -63,15 +63,15 @@ namespace vectorListSpace {
 	template <typename T>
 	bool Vector<T>::AddData(T data) {
 
-		if (getDataIndex(data) != NOT_FOUND_INDEX) {
+		if (getDataIndex(data) != VECTOR_NOT_FOUND_INDEX) {
 			return false;
 		}
 
 
 		//데이터가 꽉 찾을 경우에 배열 크기 조정
-		if (m_cnt % DATA_ARRAY_SIZE == 0) {
+		if (m_cnt % VECTOR_DATA_SIZE == 0) {
 
-			int changeSize = m_cnt + DATA_ARRAY_SIZE;
+			int changeSize = m_cnt + VECTOR_DATA_SIZE;
 
 			m_data = (T *)realloc(m_data, sizeof(T) * changeSize);
 
@@ -91,7 +91,7 @@ namespace vectorListSpace {
 
 		int index = getDataIndex(data);
 
-		if (index == NOT_FOUND_INDEX) {
+		if (index == VECTOR_NOT_FOUND_INDEX) {
 			return false;
 		}
 
@@ -103,7 +103,7 @@ namespace vectorListSpace {
 
 
 		//데이터칸수가 줄어들게 되면 사이즈 조정
-		if (m_cnt % DATA_ARRAY_SIZE == 0) {
+		if (m_cnt % VECTOR_DATA_SIZE == 0) {
 
 			int changeSize = m_cnt;
 
@@ -118,13 +118,13 @@ namespace vectorListSpace {
 		return true;
 	}
 	template <typename T>
-	int Vector<T>::GetSize() {
+	int Vector<T>::GetSize() const{
 
 		return m_cnt;
 	}
 
 	template <typename T>
-	const void Vector<T>::PrintData() const{
+	void Vector<T>::PrintData() const{
 
 		std::cout << "출력";
 		std::cout << "VectorData : ";
@@ -138,7 +138,7 @@ namespace vectorListSpace {
 	}
 
 	template <typename T>
-	int Vector<T>::getDataIndex(T data) {
+	int Vector<T>::GetDataIndex(T data) {
 
 		for (int i = 0; i < m_cnt; i++) {
 			if (m_data[i] == data) {
@@ -146,11 +146,11 @@ namespace vectorListSpace {
 			}
 		}
 
-		return NOT_FOUND_INDEX;
+		return VECTOR_NOT_FOUND_INDEX;
 
 	}
 	template <typename T>
-	bool Vector<T>::leftShiftData(int index)
+	bool Vector<T>::ShiftLeftData(int index)
 	{
 		if (index < 0 || index >= m_cnt) {
 			return false;

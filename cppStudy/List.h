@@ -1,18 +1,16 @@
 
-#include "BaseVectorList.h"
+#include "Base.h"
 
-namespace vectorListSpace {
+namespace VectorList {
 
 	template <typename T>
-	class Node {
-	public:
-		// uniform 초기화
-		Node *m_nextNode = {};
-		T m_data = {};
+	struct ListNode {
+		T data = {};
+		ListNode *pNextNode = {};
 	};
 
 	template <typename T>
-	class List : public BaseVectorList<T> {
+	class List : public Base<T> {
 
 	public:
 		
@@ -23,11 +21,11 @@ namespace vectorListSpace {
 		bool DeleteData(T data);
 		int GetSize() const;
 
-		const void PrintData() const;
+		void PrintData() const;
 
 
 	private:
-		Node<T> *m_head;
+		ListNode<T> *m_head;
 
 	};
 
@@ -37,20 +35,20 @@ namespace vectorListSpace {
 
 	template <typename T>
 	List<T>::List() {
-		m_head = new Node<T>();
+		m_head = new ListNode<T>();
 
 	}
 
 	template <typename T>
 	List<T>::~List() {
 
-		Node<T> *searchNode = m_head;
-		Node<T> *tmpNode = nullptr;
+		ListNode<T> *searchNode = m_head;
+		ListNode<T> *tmpNode = {};
 		while (searchNode != nullptr) {
 
 			tmpNode = searchNode;
 
-			searchNode = searchNode->m_nextNode;
+			searchNode = searchNode->pNextNode;
 
 
 			delete tmpNode;
@@ -64,22 +62,22 @@ namespace vectorListSpace {
 
 
 		//중복검사+ 데이터가 들어갈 위치 찾아놓기
-		Node<T> *searchNode = m_head;
-		while (searchNode->m_nextNode != nullptr) {
-			searchNode = searchNode->m_nextNode;
-			if (searchNode->m_data == data) {
+		ListNode<T> *searchNode = m_head;
+		while (searchNode->pNextNode != nullptr) {
+			searchNode = searchNode->pNextNode;
+			if (searchNode->data == data) {
 				return false;
 			}
 		}
 
 
 
-		Node<T> *addNode = new Node<T>();
-		addNode->m_data = data;
-		addNode->m_nextNode = nullptr;
+		ListNode<T> *addNode = new ListNode<T>();
+		addNode->data = data;
+		addNode->pNextNode = {};
 
 
-		searchNode->m_nextNode = addNode;
+		searchNode->pNextNode = addNode;
 
 		return true;
 	}
@@ -87,24 +85,24 @@ namespace vectorListSpace {
 	template <typename T>
 	bool List<T>::DeleteData(T data) {
 
-		Node<T> *searchNode = new Node<T>();
-		searchNode->m_nextNode = m_head;
+		ListNode<T> *searchNode = new ListNode<T>();
+		searchNode->pNextNode = m_head;
 
 
 
-		while (searchNode->m_nextNode != nullptr) {
+		while (searchNode->pNextNode != nullptr) {
 
-			if (searchNode->m_nextNode->m_data == data) {
+			if (searchNode->pNextNode->data == data) {
 
 
 
-				Node<T> * deleteNode = searchNode->m_nextNode;
-				searchNode->m_nextNode = deleteNode->m_nextNode;
+				ListNode<T> * deleteNode = searchNode->pNextNode;
+				searchNode->pNextNode = deleteNode->pNextNode;
 				delete deleteNode;
 
 				return true;
 			}
-			searchNode = searchNode->m_nextNode;
+			searchNode = searchNode->pNextNode;
 
 		}
 
@@ -115,9 +113,9 @@ namespace vectorListSpace {
 	int List<T>::GetSize() const {
 		int cnt = 0;
 
-		Node<T> *searchNode = m_head;
-		while (searchNode->m_nextNode != nullptr) {
-			searchNode = searchNode->m_nextNode;
+		ListNode<T> *searchNode = m_head;
+		while (searchNode->pNextNode != nullptr) {
+			searchNode = searchNode->pNextNode;
 			cnt++;
 		}
 		return cnt;
@@ -126,14 +124,14 @@ namespace vectorListSpace {
 	}
 
 	template <typename T>
-	const void List<T>::PrintData() const {
+	void List<T>::PrintData() const {
 		std::cout << "ListData : ";
 
-		Node<T> *searchNode = m_head;
-		while (searchNode->m_nextNode != nullptr) {
-			searchNode = searchNode->m_nextNode;
+		ListNode<T> *searchNode = m_head;
+		while (searchNode->pNextNode != nullptr) {
+			searchNode = searchNode->pNextNode;
 
-			std::cout << searchNode->m_data << "  ";
+			std::cout << searchNode->data << "  ";
 
 		}
 

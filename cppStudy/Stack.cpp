@@ -3,19 +3,19 @@
 
 
 
-namespace StackSpace {
-	stackNode *stackHead = nullptr;
+namespace Stack {
+	StackNode *stackHead = {};
 
-	void stackPush(int data) {
-		stackNode *newNode = new stackNode();
+	void PushStack(const int& data) {
+
+		StackNode *newNode = new StackNode();
 		newNode->data = data;
+		newNode->pUnderNode = stackHead;
 
-
-		newNode->underNode = stackHead;
 		stackHead = newNode;
 	}
 
-	void stackPop() {
+	void PopStack() {
 
 
 		//아무것도 없을때 빼는 예외 처리
@@ -23,37 +23,38 @@ namespace StackSpace {
 			return;
 		}
 
-		stackNode *tmpNode = stackHead->underNode;
+		StackNode *tmpNode = stackHead->pUnderNode;
+		
 		delete stackHead;
+		
 		stackHead = tmpNode;
 
 
 	}
 
-	int getSize() {
+	int GetSize() {
 
-		stackNode *searchNode = stackHead;
+		StackNode *searchNode = stackHead;
 
 		int cnt = 0;
-
-		while (searchNode->underNode != nullptr) {
-
-			searchNode = searchNode->underNode;
+		while (searchNode->pUnderNode != nullptr) {
+			searchNode = searchNode->pUnderNode;
+			
 			cnt++;
-
 		}
-		return cnt;
 
+
+		return cnt;
 	}
 
-	void printInformation() {
+	void PrintInformation() {
 		std::cout << "stack Node(위부터) : ";
-		stackNode *searchNode = stackHead;
-
+		
+		StackNode *searchNode = stackHead;
 		while (searchNode != nullptr) {
-
 			std::cout << searchNode->data << "  ";
-			searchNode = searchNode->underNode;
+			
+			searchNode = searchNode->pUnderNode;
 
 		}
 
