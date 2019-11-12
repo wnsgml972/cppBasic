@@ -11,8 +11,8 @@ namespace VectorList{
 		Base();
 		virtual ~Base();
 
-		virtual bool AddData(T data);
-		virtual bool DeleteData(T data);
+		virtual bool AddData(const T& data);
+		virtual bool DeleteData(const T& data);
 		virtual int GetSize() const;
 
 		virtual void PrintData() const;
@@ -35,13 +35,13 @@ namespace VectorList{
 	}
 
 	template <typename T>
-	bool Base<T>::AddData(T data)
+	bool Base<T>::AddData(const T& data)
 	{
 		return false;
 	}
 
 	template <typename T>
-	bool Base<T>::DeleteData(T data)
+	bool Base<T>::DeleteData(const T& data)
 	{
 		return false;
 	}

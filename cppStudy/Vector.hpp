@@ -1,11 +1,12 @@
 #include "Base.h"
-#define VECTOR_DATA_SIZE 10
-#define VECTOR_NOT_FOUND_INDEX -1
+
+
 
 
 namespace VectorList {
 
-
+	constexpr int DATA_SIZE = 10;
+	constexpr int NOT_FOUND_INDEX = -1;
 
 
 
@@ -21,8 +22,8 @@ namespace VectorList {
 		~Vector();
 
 
-		bool AddData(T data);
-		bool DeleteData(T data);
+		bool AddData(const T& data);
+		bool DeleteData(const T& data);
 		int GetSize() const;
 
 		void PrintData() const;
@@ -31,11 +32,11 @@ namespace VectorList {
 
 	private:
 		
-		int GetDataIndex(T data);
-		bool ShiftLeftData(int index);
+		int GetDataIndex(const T& data) const;
+		bool ShiftLeftData(const int& index);
 		
 		int m_cnt;
-		T *m_data;
+		T *m_pData;
 
 
 
@@ -46,7 +47,7 @@ namespace VectorList {
 	Vector<T>::Vector()
 	{
 
-		m_data = (T *)malloc(sizeof(T) * VECTOR_DATA_SIZE);
+		m_pData = new T[DATA_SIZE];
 
 		m_cnt = 0;
 
@@ -56,46 +57,46 @@ namespace VectorList {
 	{
 		std::cout << "해제?";
 
-		free(m_data);
+		free(m_pData);
 	}
 
 
 	template <typename T>
-	bool Vector<T>::AddData(T data) {
+	bool Vector<T>::AddData(const T& data) {
 
-		if (getDataIndex(data) != VECTOR_NOT_FOUND_INDEX) {
+		if (GetDataIndex(data) != NOT_FOUND_INDEX) {
 			return false;
 		}
 
 
 		//데이터가 꽉 찾을 경우에 배열 크기 조정
-		if (m_cnt % VECTOR_DATA_SIZE == 0) {
+		if (m_cnt % DATA_SIZE == 0) {
 
-			int changeSize = m_cnt + VECTOR_DATA_SIZE;
+			int changeSize = m_cnt + DATA_SIZE;
 
-			m_data = (T *)realloc(m_data, sizeof(T) * changeSize);
+			m_pData = (T *)realloc(m_pData, sizeof(T) * changeSize);
 
 
 
 		}
 
-		m_data[m_cnt] = data;
+		m_pData[m_cnt] = data;
 		m_cnt++;
 
 
 		return true;
 	}
 	template <typename T>
-	bool Vector<T>::DeleteData(T data) {
+	bool Vector<T>::DeleteData(const T& data) {
 
 
-		int index = getDataIndex(data);
+		int index = GetDataIndex(data);
 
-		if (index == VECTOR_NOT_FOUND_INDEX) {
+		if (index == NOT_FOUND_INDEX) {
 			return false;
 		}
 
-		leftShiftData(index);
+		ShiftLeftData(index);
 
 		m_cnt--;
 
@@ -103,12 +104,12 @@ namespace VectorList {
 
 
 		//데이터칸수가 줄어들게 되면 사이즈 조정
-		if (m_cnt % VECTOR_DATA_SIZE == 0) {
+		if (m_cnt % DATA_SIZE == 0) {
 
 			int changeSize = m_cnt;
 
 
-			m_data = (T *)realloc(m_data, sizeof(T) * changeSize);
+			m_pData = (T *)realloc(m_pData, sizeof(T) * changeSize);
 
 		}
 
@@ -130,7 +131,7 @@ namespace VectorList {
 		std::cout << "VectorData : ";
 
 		for (int i = 0; i < m_cnt; i++) {
-			std::cout << m_data[i] << "  ";
+			std::cout << m_pData[i] << "  ";
 		}
 
 		std::cout << "\n";
@@ -138,29 +139,29 @@ namespace VectorList {
 	}
 
 	template <typename T>
-	int Vector<T>::GetDataIndex(T data) {
+	int Vector<T>::GetDataIndex(const T& data) const{
 
 		for (int i = 0; i < m_cnt; i++) {
-			if (m_data[i] == data) {
+			if (m_pData[i] == data) {
 				return i;
 			}
 		}
 
-		return VECTOR_NOT_FOUND_INDEX;
+		return NOT_FOUND_INDEX;
 
 	}
 	template <typename T>
-	bool Vector<T>::ShiftLeftData(int index)
+	bool Vector<T>::ShiftLeftData(const int& index)
 	{
 		if (index < 0 || index >= m_cnt) {
 			return false;
 		}
 
 		for (int i = index; i < m_cnt - 1; i++) {
-			m_data[i] = m_data[i + 1];
+			m_pData[i] = m_pData[i + 1];
 		}
 
-		m_data[m_cnt - 1] = {};
+		m_pData[m_cnt - 1] = {};
 
 		return true;
 	}

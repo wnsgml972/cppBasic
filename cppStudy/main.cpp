@@ -173,12 +173,12 @@ int main()
 
 		
 
-		d1->newVectorList(t1);
-		d1->newVectorList(t2);
-		d1->newVectorList(t3);
-		d1->newVectorList(t4);
-		d1->newVectorList(t5);
-		d1->newVectorList(t6);
+		d1->NewVectorList(t1);
+		d1->NewVectorList(t2);
+		d1->NewVectorList(t3);
+		d1->NewVectorList(t4);
+		d1->NewVectorList(t5);
+		d1->NewVectorList(t6);
 
 		d1->AddData(1, 1);
 		d1->AddData(1, 2);

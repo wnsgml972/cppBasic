@@ -32,7 +32,7 @@ namespace Stack {
 
 	}
 
-	int GetSize() {
+	int GetSize(){
 
 		StackNode *searchNode = stackHead;
 
