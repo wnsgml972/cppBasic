@@ -1,5 +1,6 @@
 #include "DoubleList.h"
 #include <iostream>
+
 namespace DoubleList {
 
 	DoubleListNode *listHead = {};

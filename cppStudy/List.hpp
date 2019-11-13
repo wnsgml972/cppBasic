@@ -1,31 +1,37 @@
 
-#include "Base.h"
+#include "Base.hpp"
 
 namespace VectorList {
 
-	template <typename T>
+	template <typename ElementType>
 	struct ListNode {
-		T data = {};
+		ElementType data = {};
 		ListNode *pNextNode = {};
 	};
 
-	template <typename T>
-	class List : public Base<T> {
+	template <typename ElementType>
+	class List : public Base<ElementType> {
 
 	public:
-		
+
 		List();
 		~List();
 
-		bool AddData(const T& data);
-		bool DeleteData(const T& data);
+		bool AddData(const ElementType& data);
+		bool DeleteData(const ElementType& data);
 		int GetSize() const;
-
 		void PrintData() const;
 
+		void Copy(Base<ElementType>* right);
 
+		virtual List<ElementType>& operator=(List<ElementType>& right);
+		ListNode<ElementType>* GetHead() const;
+		
+		
 	private:
-		ListNode<T> *m_pHead;
+		ListNode<ElementType> *m_pHead;
+
+		void DeleteAllNode();
 
 	};
 
@@ -33,36 +39,24 @@ namespace VectorList {
 
 
 
-	template <typename T>
-	List<T>::List() {
-		m_pHead = new ListNode<T>();
+	template <typename ElementType>
+	List<ElementType>::List() {
+		m_pHead = new ListNode<ElementType>();
 
 	}
 
-	template <typename T>
-	List<T>::~List() {
-
-		ListNode<T> *searchNode = m_pHead;
-		ListNode<T> *tmpNode = {};
-		while (searchNode != nullptr) {
-
-			tmpNode = searchNode;
-
-			searchNode = searchNode->pNextNode;
-
-
-			delete tmpNode;
-		}
-
+	template <typename ElementType>
+	List<ElementType>::~List() {
+		DeleteAllNode();
 	}
 
 
-	template <typename T>
-	bool List<T>::AddData(const T& data) {
+	template <typename ElementType>
+	bool List<ElementType>::AddData(const ElementType& data) {
 
 
 		//중복검사+ 데이터가 들어갈 위치 찾아놓기
-		ListNode<T> *searchNode = m_pHead;
+		ListNode<ElementType> *searchNode = m_pHead;
 		while (searchNode->pNextNode != nullptr) {
 			searchNode = searchNode->pNextNode;
 			if (searchNode->data == data) {
@@ -72,7 +66,7 @@ namespace VectorList {
 
 
 
-		ListNode<T> *addNode = new ListNode<T>();
+		ListNode<ElementType> *addNode = new ListNode<ElementType>();
 		addNode->data = data;
 		addNode->pNextNode = {};
 
@@ -82,10 +76,10 @@ namespace VectorList {
 		return true;
 	}
 
-	template <typename T>
-	bool List<T>::DeleteData(const T& data) {
+	template <typename ElementType>
+	bool List<ElementType>::DeleteData(const ElementType& data) {
 
-		ListNode<T> *searchNode = new ListNode<T>();
+		ListNode<ElementType> *searchNode = new ListNode<ElementType>();
 		searchNode->pNextNode = m_pHead;
 
 
@@ -96,7 +90,7 @@ namespace VectorList {
 
 
 
-				ListNode<T> * deleteNode = searchNode->pNextNode;
+				ListNode<ElementType> * deleteNode = searchNode->pNextNode;
 				searchNode->pNextNode = deleteNode->pNextNode;
 				delete deleteNode;
 
@@ -109,11 +103,11 @@ namespace VectorList {
 		return false;
 	}
 
-	template <typename T>
-	int List<T>::GetSize() const {
+	template <typename ElementType>
+	int List<ElementType>::GetSize() const {
 		int cnt = 0;
 
-		ListNode<T> *searchNode = m_pHead;
+		ListNode<ElementType> *searchNode = m_pHead;
 		while (searchNode->pNextNode != nullptr) {
 			searchNode = searchNode->pNextNode;
 			cnt++;
@@ -123,11 +117,11 @@ namespace VectorList {
 
 	}
 
-	template <typename T>
-	void List<T>::PrintData() const {
+	template <typename ElementType>
+	void List<ElementType>::PrintData() const {
 		std::cout << "ListData : ";
 
-		ListNode<T> *searchNode = m_pHead;
+		ListNode<ElementType> *searchNode = m_pHead;
 		while (searchNode->pNextNode != nullptr) {
 			searchNode = searchNode->pNextNode;
 
@@ -139,6 +133,63 @@ namespace VectorList {
 
 	}
 
+	template<typename ElementType>
+	void List<ElementType>::Copy(Base<ElementType>* right)
+	{
+		DeleteAllNode(); //기존에 있는 데이터를 지운다
+
+
+		m_pHead = new ListNode<ElementType>();
+		
+		List<ElementType> *original = static_cast<List<ElementType>* >(right); //다운캐스팅
+
+
+
+		ListNode<ElementType> *searchNode = original->GetHead();
+
+		while (searchNode->pNextNode != nullptr) {
+			searchNode = searchNode->pNextNode;
+
+			AddData(searchNode->data);
+		}
+	}
+
+
+
+
+
+	template<typename ElementType>
+	ListNode<ElementType>* List<ElementType>::GetHead() const
+	{
+		return m_pHead;
+	
+	}
+
+
+
+	template<typename ElementType>
+	List<ElementType>& List<ElementType>::operator=(List<ElementType>& right)
+	{
+		Copy(&right);
+		return *this;
+	}
+
+
+	template<typename ElementType>
+	void List<ElementType>::DeleteAllNode()
+	{
+		ListNode<ElementType> *searchNode = m_pHead;
+		ListNode<ElementType> *tmpNode = {};
+		while (searchNode != nullptr) {
+
+			tmpNode = searchNode;
+
+			searchNode = searchNode->pNextNode;
+
+
+			delete tmpNode;
+		}
+	}
 
 
 }

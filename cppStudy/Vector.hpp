@@ -1,7 +1,6 @@
-#include "Base.h"
-
-
-
+#include "Base.hpp"
+#include <iostream>
+#include <algorithm>
 
 namespace VectorList {
 
@@ -10,8 +9,8 @@ namespace VectorList {
 
 
 
-	template <typename T>
-	class Vector : public Base<T> {
+	template <typename ElementType>
+	class Vector : public Base<ElementType> {
 
 
 
@@ -22,47 +21,50 @@ namespace VectorList {
 		~Vector();
 
 
-		bool AddData(const T& data);
-		bool DeleteData(const T& data);
+		bool AddData(const ElementType& data);
+		bool DeleteData(const ElementType& data);
 		int GetSize() const;
 
 		void PrintData() const;
+		virtual Vector<ElementType>& operator=(Vector<ElementType>& right);
 
-
+		void Copy(Base<ElementType>* right);
 
 	private:
 		
-		int GetDataIndex(const T& data) const;
+		int GetDataIndex(const ElementType& data) const;
 		bool ShiftLeftData(const int& index);
-		
+		ElementType GetData(const int& index) const;
+
 		int m_cnt;
-		T *m_pData;
+		ElementType *m_pData;
 
 
 
 	};
 
 
-	template <typename T>
-	Vector<T>::Vector()
+	template <typename ElementType>
+	Vector<ElementType>::Vector()
 	{
 
-		m_pData = new T[DATA_SIZE];
+		m_pData = new ElementType[DATA_SIZE];
 
 		m_cnt = 0;
 
 	}
-	template <typename T>
-	Vector<T>::~Vector()
+	template <typename ElementType>
+	Vector<ElementType>::~Vector()
 	{
 		std::cout << "해제?";
 
 		free(m_pData);
+
 	}
 
 
-	template <typename T>
-	bool Vector<T>::AddData(const T& data) {
+	template <typename ElementType>
+	bool Vector<ElementType>::AddData(const ElementType& data) {
 
 		if (GetDataIndex(data) != NOT_FOUND_INDEX) {
 			return false;
@@ -74,7 +76,7 @@ namespace VectorList {
 
 			int changeSize = m_cnt + DATA_SIZE;
 
-			m_pData = (T *)realloc(m_pData, sizeof(T) * changeSize);
+			m_pData = (ElementType *)realloc(m_pData, sizeof(ElementType) * changeSize);
 
 
 
@@ -86,8 +88,8 @@ namespace VectorList {
 
 		return true;
 	}
-	template <typename T>
-	bool Vector<T>::DeleteData(const T& data) {
+	template <typename ElementType>
+	bool Vector<ElementType>::DeleteData(const ElementType& data) {
 
 
 		int index = GetDataIndex(data);
@@ -109,7 +111,7 @@ namespace VectorList {
 			int changeSize = m_cnt;
 
 
-			m_pData = (T *)realloc(m_pData, sizeof(T) * changeSize);
+			m_pData = (ElementType *)realloc(m_pData, sizeof(ElementType) * changeSize);
 
 		}
 
@@ -118,28 +120,33 @@ namespace VectorList {
 
 		return true;
 	}
-	template <typename T>
-	int Vector<T>::GetSize() const{
+	template <typename ElementType>
+	int Vector<ElementType>::GetSize() const{
 
 		return m_cnt;
 	}
 
-	template <typename T>
-	void Vector<T>::PrintData() const{
+	template <typename ElementType>
+	void Vector<ElementType>::PrintData() const{
 
-		std::cout << "출력";
 		std::cout << "VectorData : ";
 
-		for (int i = 0; i < m_cnt; i++) {
+		/*for (int i = 0; i < m_cnt; i++) {
 			std::cout << m_pData[i] << "  ";
 		}
+*/
+		//람다를 사용
 
+		std::for_each(m_pData, &m_pData[m_cnt], [](int& number) {
+			std::cout << number << "  ";
+		});
+	
 		std::cout << "\n";
 
 	}
 
-	template <typename T>
-	int Vector<T>::GetDataIndex(const T& data) const{
+	template <typename ElementType>
+	int Vector<ElementType>::GetDataIndex(const ElementType& data) const{
 
 		for (int i = 0; i < m_cnt; i++) {
 			if (m_pData[i] == data) {
@@ -150,8 +157,8 @@ namespace VectorList {
 		return NOT_FOUND_INDEX;
 
 	}
-	template <typename T>
-	bool Vector<T>::ShiftLeftData(const int& index)
+	template <typename ElementType>
+	bool Vector<ElementType>::ShiftLeftData(const int& index)
 	{
 		if (index < 0 || index >= m_cnt) {
 			return false;
@@ -165,5 +172,38 @@ namespace VectorList {
 
 		return true;
 	}
+
+	template<typename ElementType>
+	ElementType Vector<ElementType>::GetData(const int & index) const
+	{
+		return m_pData[index];
+	}
+
+
+	template<typename ElementType>
+	Vector<ElementType>& Vector<ElementType>::operator=(Vector & right)
+	{
+		Copy(&right);
+		return *this;
+	}
+
+
+	template<typename ElementType>
+	void Vector<ElementType>::Copy(Base<ElementType>* right)
+	{
+		//기존에 있는 데이터를 지운다
+		free(m_pData);
+		m_pData = new ElementType[DATA_SIZE];
+
+		m_cnt = 0;
+
+
+		Vector<ElementType> *original = static_cast<Vector<ElementType>*>(right); //다운캐스팅
+		for (int i = 0; i < original->GetSize(); i++)
+		{
+			AddData(original->GetData(i));
+		}
+	}
+
 
 }

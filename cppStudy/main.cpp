@@ -2,15 +2,15 @@
 #include "Stack.h"
 #include "DoubleList.h"
 
-#include "Vector.h"
-#include "List.h"
-#include "VectorManager.h" //템플릿을 사용하려면 cpp를 import 해야 한다?
+#include "Vector.hpp"
+#include "List.hpp"
+#include "VectorManager.hpp" //템플릿을 사용하려면 cpp를 import 해야 한다?
 
 
 #include <iostream>
 #include <memory>
 
-
+#include <string>
 
 
 
@@ -163,13 +163,14 @@ int main()
 	{
 		// namespace naming snake 소문자_
 		VectorList::Base<int> *t1 = new VectorList::List<int>();
-		VectorList::Base<int> *t2 = new VectorList::List<int>();
+		VectorList::Base<int> *t2 = new VectorList::Vector<int>();
 		VectorList::Base<int> *t3 = new VectorList::List<int>();
-		VectorList::Base<int> *t4 = new VectorList::List<int>();
+		VectorList::Base<int> *t4 = new VectorList::Vector<int>();
 		VectorList::Base<int> *t5 = new VectorList::List<int>();
-		VectorList::Base<int> *t6 = new VectorList::List<int>();
+		VectorList::Base<int> *t6 = new VectorList::Vector<int>();
 
 		std::unique_ptr<Manager::DataManager<int>> d1 = std::make_unique<Manager::DataManager<int>>();
+		//Manager::DataManager<int> d1 = Manager::DataManager<int>();
 
 		
 
@@ -184,6 +185,7 @@ int main()
 		d1->AddData(1, 2);
 		d1->AddData(1, 3);
 		d1->AddData(2, 1);
+		d1->AddData(2, 2);
 		d1->AddData(3, 2);
 		d1->AddData(4, 1);
 		d1->AddData(5, 1);
@@ -191,16 +193,18 @@ int main()
 		d1->AddData(3, 1);
 		d1->AddData(7, 1);
 
-		std::cout << "size : " << d1->GetSize() << " \n";
-		d1->PrintData();
 
-		d1->DeleteData(1, 2);
-		d1->DeleteData(1, 3);
 
 		std::cout << "size : " << d1->GetSize() << " \n";
 		d1->PrintData();
 
 
+		
+		*t1 = *t3;
+		*t4 = *t2;
+
+		std::cout << "size : " << d1->GetSize() << " \n";
+		d1->PrintData();
 
 	}
 

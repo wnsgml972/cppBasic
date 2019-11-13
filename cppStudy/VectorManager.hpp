@@ -1,18 +1,18 @@
-#include "Base.h"
+#include "Base.hpp"
 namespace Manager {
 
 
-	template <typename T>
+	template <typename ElementType>
 	struct ManagerNode {
 	public:
 		int id = {};
 
-		VectorList::Base<T> *vectorlist;
-		ManagerNode *pNextNode = nullptr;
+		VectorList::Base<ElementType> *vectorlist;
+		ManagerNode *pNextNode = {};
 		
 	};
 
-	template <typename T>
+	template <typename ElementType>
 	class DataManager {
 
 
@@ -22,10 +22,10 @@ namespace Manager {
 		DataManager();
 		~DataManager();
 		
-		int NewVectorList(VectorList::Base<T> *vectorlist);
+		int NewVectorList(VectorList::Base<ElementType> *vectorlist);
 		bool DeleteVectorList(const int& id);
-		bool AddData(const int& id,const T& data);
-		bool DeleteData(const int& id,const T& data);
+		bool AddData(const int& id,const ElementType& data);
+		bool DeleteData(const int& id,const ElementType& data);
 		
 		int GetSize() const;
 		void PrintData() const;
@@ -33,10 +33,10 @@ namespace Manager {
 
 	private:
 		
-		VectorList::Base<T>* GetBase(const T& id) const;
+		VectorList::Base<ElementType>* GetBase(const int& id) const;
 		
-		ManagerNode<T> *m_pHead;
-		int m_idCnt;
+		ManagerNode<ElementType> *m_pHead;
+		int m_idCnt = 1;
 
 
 
@@ -44,17 +44,17 @@ namespace Manager {
 
 
 
-	template <typename T>
-	DataManager<T>::DataManager() {
+	template <typename ElementType>
+	DataManager<ElementType>::DataManager() {
 		m_pHead = {};
 
 	}
 
-	template <typename T>
-	DataManager<T>::~DataManager() {
+	template <typename ElementType>
+	DataManager<ElementType>::~DataManager() {
 
-		ManagerNode<T> *searchNode = m_pHead;
-		ManagerNode<T> *tmpNode = {};
+		ManagerNode<ElementType> *searchNode = m_pHead;
+		ManagerNode<ElementType> *tmpNode = {};
 		while (searchNode != nullptr) {
 
 			tmpNode = searchNode;
@@ -68,10 +68,10 @@ namespace Manager {
 	}
 
 
-	template <typename T>
-	int DataManager<T>::NewVectorList(VectorList::Base<T> *vectorlist) {
+	template <typename ElementType>
+	int DataManager<ElementType>::NewVectorList(VectorList::Base<ElementType> *vectorlist) {
 
-		ManagerNode<T> *newNode = new ManagerNode<T>();
+		ManagerNode<ElementType> *newNode = new ManagerNode<ElementType>();
 		newNode->vectorlist = vectorlist;
 		newNode->id = m_idCnt;
 
@@ -87,10 +87,10 @@ namespace Manager {
 
 	//백터리스트 삭제하는것, 그리고 매니저 검증
 
-	template <typename T>
-	bool DataManager<T>::DeleteVectorList(const int& id) {
+	template <typename ElementType>
+	bool DataManager<ElementType>::DeleteVectorList(const int& id) {
 
-		ManagerNode<T> *searchNode = new ManagerNode<T>();
+		ManagerNode<ElementType> *searchNode = new ManagerNode<ElementType>();
 
 		searchNode->pNextNode = m_pHead;
 
@@ -110,9 +110,9 @@ namespace Manager {
 	}
 
 
-	template <typename T>
-	bool DataManager<T>::AddData(const int& id, const T& data) {
-		VectorList::Base<T> *Base = GetBase(id);
+	template <typename ElementType>
+	bool DataManager<ElementType>::AddData(const int& id, const ElementType& data) {
+		VectorList::Base<ElementType> *Base = GetBase(id);
 
 		if (Base == nullptr) {
 			return false;
@@ -123,9 +123,9 @@ namespace Manager {
 
 	}
 
-	template <typename T>
-	bool DataManager<T>::DeleteData(const int& id, const T& data) {
-		VectorList::Base<T> *Base = GetBase(id);
+	template <typename ElementType>
+	bool DataManager<ElementType>::DeleteData(const int& id, const ElementType& data) {
+		VectorList::Base<ElementType> *Base = GetBase(id);
 
 		if (Base == nullptr) {
 			return false;
@@ -133,9 +133,9 @@ namespace Manager {
 		return Base->DeleteData(data);
 	}
 
-	template <typename T>
-	int DataManager<T>::GetSize() const{
-		ManagerNode<T> *searchNode = m_pHead;
+	template <typename ElementType>
+	int DataManager<ElementType>::GetSize() const{
+		ManagerNode<ElementType> *searchNode = m_pHead;
 		int cnt = 0;
 		while (searchNode != nullptr) {
 			cnt += searchNode->vectorlist->GetSize();
@@ -145,9 +145,9 @@ namespace Manager {
 		return cnt;
 	}
 
-	template <typename T>
-	void DataManager<T>::PrintData() const{
-		ManagerNode<T> *searchNode = m_pHead;
+	template <typename ElementType>
+	void DataManager<ElementType>::PrintData() const{
+		ManagerNode<ElementType> *searchNode = m_pHead;
 
 		while (searchNode != nullptr) {
 			std::cout << searchNode->id << "번 아이디-";
@@ -156,9 +156,9 @@ namespace Manager {
 		}
 	}
 
-	template <typename T>
-	VectorList::Base<T>* DataManager<T>::GetBase(const T& id) const{
-		ManagerNode<T> *searchNode = m_pHead;
+	template <typename ElementType>
+	VectorList::Base<ElementType>* DataManager<ElementType>::GetBase(const int& id) const{
+		ManagerNode<ElementType> *searchNode = m_pHead;
 		while (searchNode != nullptr) {
 
 			if (searchNode->id == id) {
