@@ -30,6 +30,7 @@ namespace vector_list {
 
 		ListNode<ElementType>* GetHeadPointer() const;		
 		
+		std::wstring GetDataListToWstring();
 
 	private:
 
@@ -174,12 +175,29 @@ namespace vector_list {
 	}
 
 
-
 	template<typename ElementType>
 	List<ElementType>& List<ElementType>::operator=(List<ElementType>& right){
 		
 		Copy(right);
 
 		return *this;
+	}
+
+
+	template<typename ElementType>
+	std::wstring List<ElementType>::GetDataListToWstring() {
+		
+		std::wstring text = L"list:";
+
+
+		ListNode<ElementType> *pSearchNode = m_pHead;
+
+		while (pSearchNode->pNextNode != nullptr) {
+			pSearchNode = pSearchNode->pNextNode;
+
+			text += std::to_wstring(pSearchNode->data) + L",";
+		}
+
+		return text.substr(0, text.length() - 1);
 	}
 }

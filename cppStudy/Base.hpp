@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 namespace vector_list{
 
 	template <typename ElementType>
@@ -16,6 +17,8 @@ namespace vector_list{
 		virtual void Copy(const Base<ElementType>& right) = 0;
 		virtual Base<ElementType>& operator=(Base<ElementType>& right);
 		
+		virtual std::wstring GetDataListToWstring() = 0;
+
 		bool AddDataUsingStdInput();
 
 

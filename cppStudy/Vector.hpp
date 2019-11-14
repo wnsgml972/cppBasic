@@ -4,7 +4,7 @@
 
 namespace vector_list {
 
-	constexpr int DATA_SIZE = 10;
+	constexpr int STANDARD_DATA_ARRAY_SIZE = 10;
 	constexpr int NOT_FOUND_INDEX = -1;
 
 
@@ -24,11 +24,16 @@ namespace vector_list {
 		void Copy(const Base<ElementType>& right);
 		virtual Vector<ElementType>& operator=(Vector<ElementType>& right);
 
+		std::wstring GetDataListToWstring();
+
 	private:
 
-		int m_cnt;
+		int m_arrayDataSize = {};
+		int m_cnt = {};
 		ElementType *m_pData;
 
+		bool AutoControlDataSize();
+		
 		bool ShiftLeftDataAfterIndex(const int& index);
 		int GetDataIndex(const ElementType& data) const;
 		ElementType GetData(const int& index) const;
@@ -38,7 +43,8 @@ namespace vector_list {
 	template <typename ElementType>
 	Vector<ElementType>::Vector(){
 
-		m_pData = new ElementType[DATA_SIZE];
+		m_pData = new ElementType[STANDARD_DATA_ARRAY_SIZE];
+		m_arrayDataSize = STANDARD_DATA_ARRAY_SIZE;
 		m_cnt = 0;
 	}
 
@@ -57,14 +63,10 @@ namespace vector_list {
 			return false;
 		}
 
-		//데이터가 꽉 찾을 경우에 배열 크기 조정
-		if (m_cnt % DATA_SIZE == 0) {
-			int changeSize = m_cnt + DATA_SIZE;
-			m_pData = (ElementType *)realloc(m_pData, sizeof(ElementType) * changeSize);
-		}
-
 		m_pData[m_cnt] = data;
 		m_cnt++;
+
+		AutoControlDataSize();
 
 		return true;
 	}
@@ -82,13 +84,28 @@ namespace vector_list {
 		ShiftLeftDataAfterIndex(index);
 		m_cnt--;
 
-		//데이터칸수가 줄어들게 되면 사이즈 조정
-		if (m_cnt % DATA_SIZE == 0) {
-			int changeSize = m_cnt;
-			m_pData = (ElementType *)realloc(m_pData, sizeof(ElementType) * changeSize);
-		}
+		AutoControlDataSize();
+
 
 		return true;
+	}
+
+
+	template <typename ElementType>
+	bool Vector<ElementType>::AutoControlDataSize(){
+
+		if (m_arrayDataSize == m_cnt) {
+			m_arrayDataSize += STANDARD_DATA_ARRAY_SIZE;
+		}
+		else if (m_arrayDataSize - STANDARD_DATA_ARRAY_SIZE - 1 == m_cnt) {
+			m_arrayDataSize -= STANDARD_DATA_ARRAY_SIZE;
+		}
+		else {
+			return false;
+		}
+
+		m_pData = (ElementType *)realloc(m_pData, sizeof(ElementType) * m_arrayDataSize);
+
 	}
 
 
@@ -155,7 +172,7 @@ namespace vector_list {
 
 		//기존에 있는 데이터를 지운다
 		free(m_pData);
-		m_pData = new ElementType[DATA_SIZE];
+		m_pData = new ElementType[STANDARD_DATA_ARRAY_SIZE];
 		m_cnt = 0;
 
 		const Vector<ElementType>& original = static_cast<const Vector<ElementType>&>(right); //다운캐스팅
@@ -172,4 +189,16 @@ namespace vector_list {
 		return m_pData[index];
 	}
 
+
+	template<typename ElementType>
+	std::wstring Vector<ElementType>::GetDataListToWstring() {
+		
+		std::wstring text = L"vector:";
+
+		for (int i = 0; i < m_cnt; i++) {
+			text += std::to_wstring(m_pData[i]) + L",";
+		}
+
+		return text.substr(0, text.length() - 1);
+	}
 }

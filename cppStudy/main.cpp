@@ -18,6 +18,9 @@ int main()
 {
 
 	std::wcout.imbue(std::locale("")); //한글 출력 설정
+	
+
+
 
 	//List 검증
 
@@ -177,12 +180,12 @@ int main()
 
 		
 
-		d1->NewVectorList(t1);
-		d1->NewVectorList(t2);
-		d1->NewVectorList(t3);
-		d1->NewVectorList(t4);
-		d1->NewVectorList(t5);
-		d1->NewVectorList(t6);
+		d1->AddVectorList(t1);
+		d1->AddVectorList(t2);
+		d1->AddVectorList(t3);
+		d1->AddVectorList(t4);
+		d1->AddVectorList(t5);
+		d1->AddVectorList(t6);
 
 		d1->AddData(1, 1);
 		d1->AddData(1, 2);
@@ -207,10 +210,13 @@ int main()
 		*t1 = *t3;
 		*t4 = *t2;
 
-		t1->AddDataUsingStdInput();
+		//우선은 int로 들어온다고 가정
+		d1->AddVectorListsFromFile(L"test.txt");
 
 		std::wcout << L"size : " << d1->GetSize() << L" \n";
 		d1->PrintData();
+
+		d1->PrintDataToFile();
 
 	}
 
