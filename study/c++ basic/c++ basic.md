@@ -24,7 +24,7 @@ int *arr = new int[5];
 delete pData;
 delete[] arr; //배열 형태로 생성한 대상은 배열 형태로 삭제
 
-```
+```zz
 - new 연산자는 객체의 **생성자 호출**, delete 연산자는 객체의 **소멸자 호출**
 
 

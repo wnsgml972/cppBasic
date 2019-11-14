@@ -16,6 +16,9 @@
 
 int main() 
 {
+
+	std::wcout.imbue(std::locale("")); //한글 출력 설정
+
 	//List 검증
 
 	/*{
@@ -28,23 +31,23 @@ int main()
 
 		test->PrintData();
 
-		std::cout << "ListSize : " << test->GetSize() << std::endl;
+		std::wcout << "ListSize : " << test->GetSize() << std::endl;
 
 
 
 		if (!test->AddData(2)) {
-			std::cout << "입력 실패\n";
+			std::wcout << "입력 실패\n";
 		}
 		test->DeleteData(2);
 
 
 		if (!test->DeleteData(2)) {
-			std::cout << "삭제 실패\n";
+			std::wcout << "삭제 실패\n";
 		}
 
 		test->PrintData();
 
-		std::cout << "ListSize : " << test->GetSize() << std::endl;
+		std::wcout << "ListSize : " << test->GetSize() << std::endl;
 
 
 		test->AddData(3);
@@ -53,7 +56,7 @@ int main()
 
 		test->PrintData();
 
-		std::cout << "ListSize : " << test->GetSize() << std::endl;
+		std::wcout << "ListSize : " << test->GetSize() << std::endl;
 
 	}*/
 
@@ -69,24 +72,24 @@ int main()
 
 	//	test2->PrintData();
 
-	//	std::cout << "VectorSize : " << test2->GetSize() << std::endl;
+	//	std::wcout << "VectorSize : " << test2->GetSize() << std::endl;
 
 
 
 	//	if (!test2->AddData(2)) {
-	//		std::cout << "입력 실패\n";
+	//		std::wcout << "입력 실패\n";
 	//	}
 	//	test2->DeleteData(2);
 
 	//	
 
 	//	if (!test2->DeleteData(1)) {
-	//		std::cout << "삭제 실패\n";
+	//		std::wcout << "삭제 실패\n";
 	//	}
 
 	//	test2->PrintData();
 
-	//	std::cout << "VectorSize : " << test2->GetSize() << std::endl;
+	//	std::wcout << "VectorSize : " << test2->GetSize() << std::endl;
 
 
 	//	test2->AddData(2);
@@ -102,14 +105,14 @@ int main()
 	//	test2->AddData(11);
 
 	//	test2->PrintData();
-	//	std::cout << "VectorSize : " << test2->GetSize() << std::endl;
+	//	std::wcout << "VectorSize : " << test2->GetSize() << std::endl;
 
 	//	test2->DeleteData(11);
 	//	test2->DeleteData(10);
 	//	test2->DeleteData(9);
 
 	//	test2->PrintData();
-	//	std::cout << "VectorSize : " << test2->GetSize() << std::endl;
+	//	std::wcout << "VectorSize : " << test2->GetSize() << std::endl;
 	//	
 	//}
 
@@ -121,7 +124,7 @@ int main()
 	//	StackSpace::stackPush(1);
 	//	StackSpace::stackPush(2);
 	//	StackSpace::stackPush(4);
-	//	std::cout << "스택 사이즈 : "<< StackSpace::getSize() << std::endl;
+	//	std::wcout << "스택 사이즈 : "<< StackSpace::getSize() << std::endl;
 	//	StackSpace::printInformation();
 
 	//	StackSpace::stackPop();
@@ -162,14 +165,14 @@ int main()
 	////Manager 검증
 	{
 		// namespace naming snake 소문자_
-		VectorList::Base<int> *t1 = new VectorList::List<int>();
-		VectorList::Base<int> *t2 = new VectorList::Vector<int>();
-		VectorList::Base<int> *t3 = new VectorList::List<int>();
-		VectorList::Base<int> *t4 = new VectorList::Vector<int>();
-		VectorList::Base<int> *t5 = new VectorList::List<int>();
-		VectorList::Base<int> *t6 = new VectorList::Vector<int>();
+		vector_list::Base<int> *t1 = new vector_list::List<int>();
+		vector_list::Base<int> *t2 = new vector_list::Vector<int>();
+		vector_list::Base<int> *t3 = new vector_list::List<int>();
+		vector_list::Base<int> *t4 = new vector_list::Vector<int>();
+		vector_list::Base<int> *t5 = new vector_list::List<int>();
+		vector_list::Base<int> *t6 = new vector_list::Vector<int>();
 
-		std::unique_ptr<Manager::DataManager<int>> d1 = std::make_unique<Manager::DataManager<int>>();
+		std::unique_ptr<manager::DataManager<int>> d1 = std::make_unique<manager::DataManager<int>>();
 		//Manager::DataManager<int> d1 = Manager::DataManager<int>();
 
 		
@@ -195,15 +198,18 @@ int main()
 
 
 
-		std::cout << "size : " << d1->GetSize() << " \n";
+
+		std::wcout << "size : " << d1->GetSize() << " \n";
 		d1->PrintData();
 
 
-		
+
 		*t1 = *t3;
 		*t4 = *t2;
 
-		std::cout << "size : " << d1->GetSize() << " \n";
+		t1->AddDataUsingStdInput();
+
+		std::wcout << L"size : " << d1->GetSize() << L" \n";
 		d1->PrintData();
 
 	}

@@ -1,17 +1,17 @@
 #include "DoubleList.h"
 #include <iostream>
 
-namespace DoubleList {
+namespace double_list {
 
 	DoubleListNode *listHead = {};
 	DoubleListNode *listTail = {};
 
 
 	void AddHead(const int& data){
+	
 		DoubleListNode *newNode = new DoubleListNode();
 		newNode->data = data;
 
-		//아무것도 없으면 tail이 가르키는 값으로도 연결
 		if (listHead == nullptr) {
 			listTail = newNode;
 		}
@@ -21,18 +21,14 @@ namespace DoubleList {
 
 		newNode->dpNextNode = listHead;
 		listHead = newNode;
-
-
-
 	}
 
+
 	void AddTail(const int& data){
-		
+
 		DoubleListNode *newNode = new DoubleListNode();
 		newNode->data = data;
 
-
-		//아무것도 없으면 Head이 가르키는 값으로도 연결
 		if (listTail == nullptr) {
 			listHead = newNode;
 		}
@@ -42,21 +38,19 @@ namespace DoubleList {
 
 		newNode->dpPrevNode = listTail;
 		listTail = newNode;
-
 	}
 
+
 	void DeleteHead(){
+
 		if (listHead == nullptr) {
 			return;
 		}
 
-
-
-		DoubleListNode *tmpNode = listHead->dpNextNode;
+		DoubleListNode *pDeleteNode = listHead->dpNextNode;
 		delete listHead;
-		listHead = tmpNode;
+		listHead = pDeleteNode;
 
-		
 		if (listHead == nullptr) {
 			listTail = {};
 		}
@@ -65,19 +59,16 @@ namespace DoubleList {
 		}
 	}
 
+
 	void DeleteTail(){
 	
-
 		if (listTail == nullptr) {
 			return;
 		}
 
-
-
-		DoubleListNode *tmpNode = listTail->dpPrevNode;
+		DoubleListNode *pDeleteNode = listTail->dpPrevNode;
 		delete listTail;
-		listTail = tmpNode;
-
+		listTail = pDeleteNode;
 
 		if (listTail == nullptr) {
 			listHead = nullptr;
@@ -85,24 +76,22 @@ namespace DoubleList {
 		else {
 			listTail->dpNextNode = {};
 		}
-
 	}
 
+
 	void PrintInformation(){
-		std::cout << "doublie list node(head부터) : ";
+		
+		std::wcout << L"doublie list node(head부터) : ";
 
+		DoubleListNode *pSearchNode = listHead;
 
-		DoubleListNode *searchNode = listHead;
-
-		while (searchNode != nullptr) {
-
-			std::cout << searchNode->data << "  ";
-			searchNode = searchNode->dpNextNode;
+		while (pSearchNode != nullptr) {
+			std::wcout << pSearchNode->data << L"  ";
+			pSearchNode = pSearchNode->dpNextNode;
 
 		}
 
-
-		std::cout << "\n";
+		std::wcout << L"\n";
 	}
 
 

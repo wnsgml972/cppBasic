@@ -31,7 +31,7 @@ CPP 교육용
 - [x] Delete : 동일한 데이터가 없으면 Delete 실패  
 - [x] GetSize : 현재 데이터 개수 반환  
 - [x] PrintData : 현재 데이터 정보를 표준 출력으로 출력  
-- [ ] 삽입되는 데이터를 표준 입력으로 받음  
+- [x] 삽입되는 데이터를 표준 입력으로 받음 - AddDataUsingSTD
 - [x] 변수는 private, 함수는 public  
 - [x] 상속을 통해 기반 클래스는 동일하게 구현  
 ### DataManager 클래스 구현

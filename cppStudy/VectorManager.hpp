@@ -1,5 +1,9 @@
 #include "Base.hpp"
-namespace Manager {
+#include <fstream>
+#include <iostream>
+#include <string>
+
+namespace manager {
 
 
 	template <typename ElementType>
@@ -7,7 +11,7 @@ namespace Manager {
 	public:
 		int id = {};
 
-		VectorList::Base<ElementType> *vectorlist;
+		vector_list::Base<ElementType> *vectorlist;
 		ManagerNode *pNextNode = {};
 		
 	};
@@ -22,7 +26,7 @@ namespace Manager {
 		DataManager();
 		~DataManager();
 		
-		int NewVectorList(VectorList::Base<ElementType> *vectorlist);
+		int NewVectorList(vector_list::Base<ElementType> *vectorlist);
 		bool DeleteVectorList(const int& id);
 		bool AddData(const int& id,const ElementType& data);
 		bool DeleteData(const int& id,const ElementType& data);
@@ -30,10 +34,13 @@ namespace Manager {
 		int GetSize() const;
 		void PrintData() const;
 
+		bool AddDataFromFile();
+		bool PrintDataToFile();
+
 
 	private:
 		
-		VectorList::Base<ElementType>* GetBase(const int& id) const;
+		vector_list::Base<ElementType>* GetBase(const int& id) const;
 		
 		ManagerNode<ElementType> *m_pHead;
 		int m_idCnt = 1;
@@ -53,23 +60,23 @@ namespace Manager {
 	template <typename ElementType>
 	DataManager<ElementType>::~DataManager() {
 
-		ManagerNode<ElementType> *searchNode = m_pHead;
-		ManagerNode<ElementType> *tmpNode = {};
-		while (searchNode != nullptr) {
+		ManagerNode<ElementType> *pSearchNode = m_pHead;
+		ManagerNode<ElementType> *pDeleteNode = {};
+		while (pSearchNode != nullptr) {
 
-			tmpNode = searchNode;
+			pDeleteNode = pSearchNode;
 
-			searchNode = searchNode->pNextNode;
+			pSearchNode = pSearchNode->pNextNode;
 
 
-			delete tmpNode;
+			delete pDeleteNode;
 		}
 
 	}
 
 
 	template <typename ElementType>
-	int DataManager<ElementType>::NewVectorList(VectorList::Base<ElementType> *vectorlist) {
+	int DataManager<ElementType>::NewVectorList(vector_list::Base<ElementType> *vectorlist) {
 
 		ManagerNode<ElementType> *newNode = new ManagerNode<ElementType>();
 		newNode->vectorlist = vectorlist;
@@ -90,17 +97,17 @@ namespace Manager {
 	template <typename ElementType>
 	bool DataManager<ElementType>::DeleteVectorList(const int& id) {
 
-		ManagerNode<ElementType> *searchNode = new ManagerNode<ElementType>();
+		ManagerNode<ElementType> *pSearchNode = new ManagerNode<ElementType>();
 
-		searchNode->pNextNode = m_pHead;
+		pSearchNode->pNextNode = m_pHead;
 
 
-		while (searchNode->pNextNode != nullptr) {
-			if (searchNode->pNextNode->id == id) {
+		while (pSearchNode->pNextNode != nullptr) {
+			if (pSearchNode->pNextNode->id == id) {
 
-				ManagerNode *deleteNode = searchNode->pNextNode;
-				searchNode->pNextNode = deleteNode->pNextNode;
-				delete deleteNode;
+				ManagerNode *pDeleteNode = pSearchNode->pNextNode;
+				pSearchNode->pNextNode = pDeleteNode->pNextNode;
+				delete pDeleteNode;
 
 				return true;
 			}
@@ -112,7 +119,7 @@ namespace Manager {
 
 	template <typename ElementType>
 	bool DataManager<ElementType>::AddData(const int& id, const ElementType& data) {
-		VectorList::Base<ElementType> *Base = GetBase(id);
+		vector_list::Base<ElementType> *Base = GetBase(id);
 
 		if (Base == nullptr) {
 			return false;
@@ -125,7 +132,7 @@ namespace Manager {
 
 	template <typename ElementType>
 	bool DataManager<ElementType>::DeleteData(const int& id, const ElementType& data) {
-		VectorList::Base<ElementType> *Base = GetBase(id);
+		vector_list::Base<ElementType> *Base = GetBase(id);
 
 		if (Base == nullptr) {
 			return false;
@@ -135,11 +142,11 @@ namespace Manager {
 
 	template <typename ElementType>
 	int DataManager<ElementType>::GetSize() const{
-		ManagerNode<ElementType> *searchNode = m_pHead;
+		ManagerNode<ElementType> *pSearchNode = m_pHead;
 		int cnt = 0;
-		while (searchNode != nullptr) {
-			cnt += searchNode->vectorlist->GetSize();
-			searchNode = searchNode->pNextNode;
+		while (pSearchNode != nullptr) {
+			cnt += pSearchNode->vectorlist->GetSize();
+			pSearchNode = pSearchNode->pNextNode;
 		}
 
 		return cnt;
@@ -147,24 +154,51 @@ namespace Manager {
 
 	template <typename ElementType>
 	void DataManager<ElementType>::PrintData() const{
-		ManagerNode<ElementType> *searchNode = m_pHead;
+		ManagerNode<ElementType> *pSearchNode = m_pHead;
 
-		while (searchNode != nullptr) {
-			std::cout << searchNode->id << "번 아이디-";
-			searchNode->vectorlist->PrintData();
-			searchNode = searchNode->pNextNode;
+		while (pSearchNode != nullptr) {
+			std::wcout << pSearchNode->id << L"번 아이디-";
+			pSearchNode->vectorlist->PrintData();
+			pSearchNode = pSearchNode->pNextNode;
 		}
 	}
 
-	template <typename ElementType>
-	VectorList::Base<ElementType>* DataManager<ElementType>::GetBase(const int& id) const{
-		ManagerNode<ElementType> *searchNode = m_pHead;
-		while (searchNode != nullptr) {
+	template<typename ElementType>
+	bool DataManager<ElementType>::AddDataFromFile(){
 
-			if (searchNode->id == id) {
-				return searchNode->vectorlist;
+		std::ifstream inputFileText("data.txt");
+
+		if (!inputFileText.is_open()) {
+			std::wcout << L"파일을 찾을 수 없습니다!" << L"\n";
+			return false;
+		}
+
+		std::wstring lineText;
+
+		while (inputFileText) {
+			getline(inputFileText, lineText);
+			std::wcout << lineText << L"\n";
+		}
+
+
+		return false;
+	}
+
+	template<typename ElementType>
+	bool DataManager<ElementType>::PrintDataToFile()
+	{
+		return false;
+	}
+
+	template <typename ElementType>
+	vector_list::Base<ElementType>* DataManager<ElementType>::GetBase(const int& id) const{
+		ManagerNode<ElementType> *pSearchNode = m_pHead;
+		while (pSearchNode != nullptr) {
+
+			if (pSearchNode->id == id) {
+				return pSearchNode->vectorlist;
 			}
-			searchNode = searchNode->pNextNode;
+			pSearchNode = pSearchNode->pNextNode;
 
 		}
 
