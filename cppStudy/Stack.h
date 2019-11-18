@@ -1,12 +1,12 @@
 namespace stack {
 
 	struct StackNode {
-		int data = {};
+		int element = {};
 		StackNode *pUnderNode = {};
 	};
 
-	void PushStack(const int& data);
+	void PushStack(const int& element);
 	void PopStack();
-	int GetSize();
+	const int GetSize();
 	void PrintInformation();
 }

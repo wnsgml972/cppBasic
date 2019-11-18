@@ -3,96 +3,82 @@
 
 namespace double_list {
 
-	DoubleListNode *listHead = {};
-	DoubleListNode *listTail = {};
+	DoubleListNode *pListHead = {};
+	DoubleListNode *pListTail = {};
 
 
-	void AddHead(const int& data){
-	
-		DoubleListNode *newNode = new DoubleListNode();
-		newNode->data = data;
+	void AddHead(const int& element){
+		DoubleListNode *pNewNode = new DoubleListNode();
+		pNewNode->element = element;
 
-		if (listHead == nullptr) {
-			listTail = newNode;
+		if (pListHead == nullptr) {
+			pListTail = pNewNode;
 		}
 		else {
-			listHead->dpPrevNode = newNode;
+			pListHead->dpPrevNode = pNewNode;
 		}
-
-		newNode->dpNextNode = listHead;
-		listHead = newNode;
+		pNewNode->dpNextNode = pListHead;
+		pListHead = pNewNode;
 	}
 
 
-	void AddTail(const int& data){
+	void AddTail(const int& element){
+		DoubleListNode *pNewNode = new DoubleListNode();
+		pNewNode->element = element;
 
-		DoubleListNode *newNode = new DoubleListNode();
-		newNode->data = data;
-
-		if (listTail == nullptr) {
-			listHead = newNode;
+		if (pListTail == nullptr) {
+			pListHead = pNewNode;
 		}
 		else {
-			listTail->dpNextNode = newNode;
+			pListTail->dpNextNode = pNewNode;
 		}
-
-		newNode->dpPrevNode = listTail;
-		listTail = newNode;
+		pNewNode->dpPrevNode = pListTail;
+		pListTail = pNewNode;
 	}
 
 
 	void DeleteHead(){
-
-		if (listHead == nullptr) {
+		if (pListHead == nullptr) {
 			return;
 		}
 
-		DoubleListNode *pDeleteNode = listHead->dpNextNode;
-		delete listHead;
-		listHead = pDeleteNode;
-
-		if (listHead == nullptr) {
-			listTail = {};
+		DoubleListNode *pDeleteNode = pListHead->dpNextNode;
+		delete pListHead;
+		pListHead = pDeleteNode;
+		if (pListHead == nullptr) {
+			pListTail = {};
 		}
 		else {
-			listHead->dpPrevNode = {};
+			pListHead->dpPrevNode = {};
 		}
 	}
 
 
 	void DeleteTail(){
-	
-		if (listTail == nullptr) {
+		if (pListTail == nullptr) {
 			return;
 		}
 
-		DoubleListNode *pDeleteNode = listTail->dpPrevNode;
-		delete listTail;
-		listTail = pDeleteNode;
-
-		if (listTail == nullptr) {
-			listHead = nullptr;
+		DoubleListNode *pDeleteNode = pListTail->dpPrevNode;
+		delete pListTail;
+		pListTail = pDeleteNode;
+		if (pListTail == nullptr) {
+			pListHead = {};
 		}
 		else {
-			listTail->dpNextNode = {};
+			pListTail->dpNextNode = {};
 		}
 	}
 
 
 	void PrintInformation(){
-		
 		std::wcout << L"doublie list node(headºÎÅÍ) : ";
-
-		DoubleListNode *pSearchNode = listHead;
+		DoubleListNode *pSearchNode = pListHead;
 
 		while (pSearchNode != nullptr) {
-			std::wcout << pSearchNode->data << L"  ";
+			std::wcout << pSearchNode->element << L"  ";
 			pSearchNode = pSearchNode->dpNextNode;
-
 		}
-
 		std::wcout << L"\n";
 	}
-
-
 }

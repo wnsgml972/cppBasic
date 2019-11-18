@@ -157,7 +157,7 @@
     <ClInclude Include="List.hpp" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Vector.hpp" />
-    <ClInclude Include="VectorManager.hpp" />
+    <ClInclude Include="Manager.hpp" />
     <ClInclude Include="Base.hpp" />
   </ItemGroup>
   <ItemGroup>

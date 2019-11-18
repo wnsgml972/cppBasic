@@ -18,9 +18,6 @@
     <ClInclude Include="Stack.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="VectorManager.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Vector.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -31,6 +28,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Base.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

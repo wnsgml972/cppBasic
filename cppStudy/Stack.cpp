@@ -1,61 +1,51 @@
 #include "Stack.h"
 #include <iostream>
 
-
-
 namespace stack {
 
-	StackNode *stackHead = {};
+	StackNode *pStackHead = {};
 
-	void PushStack(const int& data) {
 
-		StackNode *newNode = new StackNode();
-		newNode->data = data;
-		newNode->pUnderNode = stackHead;
-		stackHead = newNode;
+	void PushStack(const int& element) {
+		StackNode *pNewNode = new StackNode();
+		pNewNode->element = element;
+		pNewNode->pUnderNode = pStackHead;
+		pStackHead = pNewNode;
 	}
 
 
 	void PopStack() {
-		
-		if (stackHead == nullptr) {
+		if (pStackHead == nullptr) {
 			return;
 		}
 
-		StackNode *pDeleteNode = stackHead->pUnderNode;
-		delete stackHead;
-		stackHead = pDeleteNode;
+		StackNode *pDeleteNode = pStackHead->pUnderNode;
+		delete pStackHead;
+		pStackHead = pDeleteNode;
 	}
 
 
-	int GetSize(){
-
-		StackNode *pSearchNode = stackHead;
-
-		int cnt = 0;
+	const int GetSize(){
+		StackNode *pSearchNode = pStackHead;
+		int nodeCount = 0;
 
 		while (pSearchNode->pUnderNode != nullptr) {
 			pSearchNode = pSearchNode->pUnderNode;
-			
-			cnt++;
+			nodeCount++;
 		}
 
-		return cnt;
+		return nodeCount;
 	}
 
 
 	void PrintInformation() {
-	
 		std::wcout << L"stack Node(À§ºÎÅÍ) : ";
-		
-		StackNode *pSearchNode = stackHead;
+		StackNode *pSearchNode = pStackHead;
 
 		while (pSearchNode != nullptr) {
-			std::wcout << pSearchNode->data << L"  ";
-
+			std::wcout << pSearchNode->element << L"  ";
 			pSearchNode = pSearchNode->pUnderNode;
 		}
-
 		std::wcout << L"\n";
 	}
 }
