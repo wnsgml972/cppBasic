@@ -51,7 +51,7 @@ namespace vector_list {
 	template <typename ElementType>
 	bool Vector<ElementType>::AddNonDuplicateElement(const ElementType& element) {
 		
-		if (GetElementIndex(element) == false) {
+		if (GetElementIndex(element).has_value()) {
 			return false;
 		}
 		m_pElement[m_cnt] = element;

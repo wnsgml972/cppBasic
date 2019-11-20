@@ -1,8 +1,10 @@
+list:2,3
+vector
+list
+vector
+list
+vector
+vector:111,222,333
 list:1111,2222,3333
 vector:111,222,333
-vector
-list:1
-vector:1,2
-list:2,1
-vector:1,2
-list:2,1
+vector:111,222,333

@@ -33,14 +33,14 @@ namespace manager {
 		int GetSize() const;
 		void PrintElement() const;
 		bool AddVectorListsFromFile(std::wstring fileName);
-		void PrintElementToFile(const std::wstring& outputFileName);
+		void CreateFilebyElement(const std::wstring& outputFileName);
 
 	private:		
 		std::optional<vector_list::Base<ElementType>*> GetVectorList(const int& id) const;
 		bool AddVectorListByTextFormat(const std::wstring& text);
 
 		ElementType WcharToElementType(const wchar_t* elementcharText);
-		std::optional<vector_list::Base<ElementType> *> CreateVectorOrListByTextFormat(const std::wstring& text);
+		vector_list::Base<ElementType> * CreateVectorOrListByTextFormat(const std::wstring& text);
 
 		ManagerNode<ElementType> *m_pHead;
 		int m_idCnt = VECTORLIST_ID_START_NUMBER;
@@ -71,9 +71,20 @@ namespace manager {
 		ManagerNode<ElementType> *pNewNode = new ManagerNode<ElementType>();
 		pNewNode->pVectorList = pVectorList;
 		pNewNode->id = m_idCnt;
-		pNewNode->pNextNode = m_pHead;
-		m_pHead = pNewNode;
 
+		if (m_pHead == nullptr) {
+			m_pHead = pNewNode;
+			pNewNode->pNextNode = {};
+			
+		}
+		else {
+			ManagerNode<ElementType> *pSearchNode = m_pHead;
+			while (pSearchNode->pNextNode != nullptr) {
+				pSearchNode = pSearchNode->pNextNode;
+			}
+			pSearchNode->pNextNode = pNewNode;
+		}
+		
 		return m_idCnt++;
 	}
 
@@ -170,7 +181,7 @@ namespace manager {
 
 
 	template<typename ElementType>
-	void ElementManager<ElementType>::PrintElementToFile(const std::wstring& outputFileName) {
+	void ElementManager<ElementType>::CreateFilebyElement(const std::wstring& outputFileName) {
 		std::wofstream outputFileText(outputFileName);
 		ManagerNode<ElementType> *pSearchNode = m_pHead;
 
@@ -204,16 +215,13 @@ namespace manager {
 
 	template<typename ElementType>
 	bool ElementManager<ElementType>::AddVectorListByTextFormat(const std::wstring& text){ 
-		auto newVectorListOptional = CreateVectorOrListByTextFormat(text);
-		if (!newVectorListOptional.has_value()) {
-			return false;
-		}
 
-		vector_list::Base<ElementType> *newVectorList = CreateVectorOrListByTextFormat(text).value();
+
+		vector_list::Base<ElementType> *newVectorList = CreateVectorOrListByTextFormat(text);
 
 		std::wstring textDelim = L",";
-		int textStart = text.find(':') + 1;
-		int textEnd = text.find(textDelim);
+		auto textStart = text.find(':') + 1;
+		auto textEnd = text.find(textDelim);
 
 		while (textEnd != std::string::npos) {
 			ElementType element = WcharToElementType(text.substr(textStart, textEnd - textStart).c_str());
@@ -232,12 +240,13 @@ namespace manager {
 
 
 	template<typename ElementType>
-	std::optional<vector_list::Base<ElementType> *> ElementManager<ElementType>::CreateVectorOrListByTextFormat(const std::wstring& text) {
+	vector_list::Base<ElementType> * ElementManager<ElementType>::CreateVectorOrListByTextFormat(const std::wstring& text) {
 		vector_list::Base<int> *newVectorList = {};
-		int colonIndex = text.find(':');
+		auto colonIndex = text.find(':');
 
 		if (colonIndex == std::string::npos) {
-			return {};
+			// 현재 버젼에서는 지원하지 않는 타입입니다.
+			assert(0);
 		}
 
 		std::wstring typeText = text.substr(0, colonIndex);
@@ -248,7 +257,8 @@ namespace manager {
 			newVectorList = new vector_list::List<ElementType>();
 		}
 		else {
-			return {};
+			// 현재 버젼에서는 지원하지 않는 타입입니다.
+			assert(0);
 		}
 		
 		return newVectorList;
@@ -260,6 +270,8 @@ namespace manager {
 		ElementType element = {};
 		std::wstring elementString(elementcharText);
 
+#pragma warning(push)
+#pragma warning(disable: 4244)
 		//if문 노가다 대신에 함수 포인터 배열로 해결을 하려고 했으나.... 
 		if(typeid(ElementType) == typeid(int)){
 			element = std::stoi(elementString);
@@ -270,6 +282,11 @@ namespace manager {
 		else if (typeid(ElementType) == typeid(double)) {
 			element = std::stod(elementString);
 		}
+		else {
+			// 현재 버젼에서는 지원하지 않는 타입입니다.
+			assert(0);
+		}
+#pragma warning(pop)
 
 		return element;
 	}
