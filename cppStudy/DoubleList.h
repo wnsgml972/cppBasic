@@ -2,8 +2,8 @@ namespace double_list {
 
 	struct DoubleListNode {
 		int element = {};
-		DoubleListNode *dpNextNode = {};
-		DoubleListNode *dpPrevNode = {};
+		DoubleListNode *pNextNode = {};
+		DoubleListNode *pPrevNode = {};
 	};
 
 	void AddHead(const int& element);

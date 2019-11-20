@@ -14,19 +14,19 @@ namespace vector_list {
 		Vector();
 		virtual ~Vector() override;
 
-		virtual bool AddElement(const ElementType& element) override;
-		virtual bool DeleteElement(const ElementType& element) override;
+		virtual bool AddNonDuplicateElement(const ElementType& element) override;
+		virtual void DeleteElement(const ElementType& element) override;
 		virtual const int GetSize() const override;
 		virtual void PrintElement() const override;
-		virtual Vector<ElementType>& operator=(Vector<ElementType>& right);
 		virtual void Copy(const Base<ElementType>& right) override;
 		virtual std::wstring GetElementListToWstring() override;
 
+		Vector<ElementType>& operator=(Vector<ElementType>& right);
 	private:
 		const std::optional<int> GetElementIndex(const ElementType& element) const;
 		std::optional<ElementType> GetElement(const int& index) const;
-		const bool AutoControlElementSize();
-		const bool ShiftLeftElementAfterIndex(const int& index);
+		const void AutoControlElementSize();
+		const void ShiftLeftElementAfterIndex(const int& index);
 
 		int m_arrayElementSize = {};
 		int m_cnt = {};
@@ -44,12 +44,12 @@ namespace vector_list {
 
 	template <typename ElementType>
 	Vector<ElementType>::~Vector(){
-		free(m_pElement);
+		if(m_pElement) free(m_pElement);
 	}
 
 
 	template <typename ElementType>
-	bool Vector<ElementType>::AddElement(const ElementType& element) {
+	bool Vector<ElementType>::AddNonDuplicateElement(const ElementType& element) {
 		
 		if (GetElementIndex(element) == false) {
 			return false;
@@ -63,18 +63,17 @@ namespace vector_list {
 
 
 	template <typename ElementType>
-	bool Vector<ElementType>::DeleteElement(const ElementType& element) {
+	void Vector<ElementType>::DeleteElement(const ElementType& element) {
 		const std::optional<int> indexOptional = GetElementIndex(element);
 		if (!indexOptional.has_value()) {
-			return false;
+			assert(0);
 		}
 		int index = indexOptional.value();
 
 		ShiftLeftElementAfterIndex(index);
 		m_cnt--;
 
-		AutoControlElementSize();
-		return true;
+		AutoControlElementSize(); 
 	}
 
 
@@ -104,14 +103,17 @@ namespace vector_list {
 
 	template<typename ElementType>
 	void Vector<ElementType>::Copy(const Base<ElementType>& right) {
-		free(m_pElement);
+		if (m_pElement) {
+			free(m_pElement);
+		}
+		
 		m_pElement = new ElementType[STANDARD_ELEMENT_ARRAY_SIZE];
 		m_cnt = 0;
 
 		const Vector<ElementType>& original = static_cast<const Vector<ElementType>&>(right); //다운캐스팅
 
 		for (int i = 0; i < original.GetSize(); i++) {
-			AddElement(original.GetElement(i).value());
+			AddNonDuplicateElement(original.GetElement(i).value());
 		}
 	}
 
@@ -149,31 +151,27 @@ namespace vector_list {
 
 
 	template <typename ElementType>
-	const bool Vector<ElementType>::AutoControlElementSize() {
+	const void Vector<ElementType>::AutoControlElementSize() {
 		if (m_arrayElementSize == m_cnt) {
 			m_arrayElementSize += STANDARD_ELEMENT_ARRAY_SIZE;
 		}
 		else if (m_arrayElementSize - STANDARD_ELEMENT_ARRAY_SIZE - 1 == m_cnt) {
 			m_arrayElementSize -= STANDARD_ELEMENT_ARRAY_SIZE;
 		}
-		else {
-			return false;
-		}
+
 		m_pElement = (ElementType *)realloc(m_pElement, sizeof(ElementType) * m_arrayElementSize);
-		return true;
 	}
 
 
 	template <typename ElementType>
-	const bool Vector<ElementType>::ShiftLeftElementAfterIndex(const int& index) {
+	const void Vector<ElementType>::ShiftLeftElementAfterIndex(const int& index) {
 		if (index < 0 || index >= m_cnt) {
-			return false;
+			assert(0);
 		}
 
 		for (int i = index; i < m_cnt - 1; i++) {
 			m_pElement[i] = m_pElement[i + 1];
 		}
 		m_pElement[m_cnt - 1] = {};
-		return true;
 	}
 }

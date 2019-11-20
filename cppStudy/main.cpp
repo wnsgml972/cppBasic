@@ -27,8 +27,8 @@ int main()
 		std::unique_ptr<vectorListSpace::Base<int>> test = std::make_unique<vectorListSpace::List<int>>();
 
 
-		test->AddElement(1);
-		test->AddElement(2);
+		test->AddNonDuplicateElement(1);
+		test->AddNonDuplicateElement(2);
 
 
 		test->PrintElement();
@@ -37,7 +37,7 @@ int main()
 
 
 
-		if (!test->AddElement(2)) {
+		if (!test->AddNonDuplicateElement(2)) {
 			std::wcout << "입력 실패\n";
 		}
 		test->DeleteElement(2);
@@ -52,9 +52,9 @@ int main()
 		std::wcout << "ListSize : " << test->GetSize() << std::endl;
 
 
-		test->AddElement(3);
+		test->AddNonDuplicateElement(3);
 
-		test->AddElement(5);
+		test->AddNonDuplicateElement(5);
 
 		test->PrintElement();
 
@@ -68,9 +68,9 @@ int main()
 	//	std::unique_ptr<vectorListSpace::Base> test2 = std::make_unique<vectorListSpace::Vector>();
 
 
-	//	test2->AddElement(1);
-	//	test2->AddElement(2);
-	//	test2->AddElement(3);
+	//	test2->AddNonDuplicateElement(1);
+	//	test2->AddNonDuplicateElement(2);
+	//	test2->AddNonDuplicateElement(3);
 
 	//	test2->PrintElement();
 
@@ -78,7 +78,7 @@ int main()
 
 
 
-	//	if (!test2->AddElement(2)) {
+	//	if (!test2->AddNonDuplicateElement(2)) {
 	//		std::wcout << "입력 실패\n";
 	//	}
 	//	test2->DeleteElement(2);
@@ -94,17 +94,17 @@ int main()
 	//	std::wcout << "VectorSize : " << test2->GetSize() << std::endl;
 
 
-	//	test2->AddElement(2);
+	//	test2->AddNonDuplicateElement(2);
 	//	
-	//	test2->AddElement(4);
-	//	test2->AddElement(5);
-	//	test2->AddElement(6);
-	//	test2->AddElement(7);
-	//	test2->AddElement(8);
-	//	test2->AddElement(9);
-	//	test2->AddElement(10);
+	//	test2->AddNonDuplicateElement(4);
+	//	test2->AddNonDuplicateElement(5);
+	//	test2->AddNonDuplicateElement(6);
+	//	test2->AddNonDuplicateElement(7);
+	//	test2->AddNonDuplicateElement(8);
+	//	test2->AddNonDuplicateElement(9);
+	//	test2->AddNonDuplicateElement(10);
 	//	test2->PrintElement();
-	//	test2->AddElement(11);
+	//	test2->AddNonDuplicateElement(11);
 
 	//	test2->PrintElement();
 	//	std::wcout << "VectorSize : " << test2->GetSize() << std::endl;
@@ -186,18 +186,18 @@ int main()
 		d1->AddVectorList(t5);
 		d1->AddVectorList(t6);
 
-		d1->AddElement(1, 1);
-		d1->AddElement(1, 2);
-		d1->AddElement(1, 3);
-		d1->DeleteElement(1, 1);
-		d1->AddElement(2, 1);
-		d1->AddElement(2, 2);
-		d1->AddElement(3, 2);
-		d1->AddElement(4, 1);
-		d1->AddElement(5, 1);
-		d1->AddElement(0, 1);
-		d1->AddElement(3, 1);
-		d1->AddElement(7, 1);
+		d1->AddNonDuplicateElementById(1, 1);
+		d1->AddNonDuplicateElementById(1, 2);
+		d1->AddNonDuplicateElementById(1, 3);
+		d1->DeleteElementFromId(1, 1);
+		d1->AddNonDuplicateElementById(2, 1);
+		d1->AddNonDuplicateElementById(2, 2);
+		d1->AddNonDuplicateElementById(3, 2);
+		d1->AddNonDuplicateElementById(4, 1);
+		d1->AddNonDuplicateElementById(5, 1);
+		d1->AddNonDuplicateElementById(0, 1);
+		d1->AddNonDuplicateElementById(3, 1);
+		d1->AddNonDuplicateElementById(7, 1);
 
 
 
@@ -216,7 +216,7 @@ int main()
 		std::wcout << L"size : " << d1->GetSize() << L" \n";
 		d1->PrintElement();
 
-		d1->PrintElementToFile();
+		d1->PrintElementToFile(L"test2.txt");
 
 	}
 

@@ -17,14 +17,14 @@ namespace vector_list {
 		List();
 		virtual ~List() override;
 
-		virtual bool AddElement(const ElementType& element) override;
-		virtual bool DeleteElement(const ElementType& element) override;
+		virtual bool AddNonDuplicateElement(const ElementType& element) override;
+		virtual void DeleteElement(const ElementType& element) override;
 		virtual const int GetSize() const override;
 		virtual void PrintElement() const override;
-		virtual List<ElementType>& operator=(List<ElementType>& right);
 		virtual void Copy(const Base<ElementType>& right) override;
 		virtual std::wstring GetElementListToWstring() override;
 
+		List<ElementType>& operator=(List<ElementType>& right);
 	private:
 		void DeleteAllElement();
 		ListNode<ElementType>* GetHeadPointer() const;
@@ -60,7 +60,7 @@ namespace vector_list {
 
 
 	template <typename ElementType>
-	bool List<ElementType>::AddElement(const ElementType& element) {
+	bool List<ElementType>::AddNonDuplicateElement(const ElementType& element) {
 		std::optional<ListNode<ElementType>*> pLastNodeOptional = FindElementExceptDuplicate(element);
 		if (!pLastNodeOptional.has_value()) {
 			return false;
@@ -76,7 +76,7 @@ namespace vector_list {
 
 
 	template <typename ElementType>
-	bool List<ElementType>::DeleteElement(const ElementType& element) {
+	void List<ElementType>::DeleteElement(const ElementType& element) {
 		ListNode<ElementType> *pSearchNode = m_pHead;
 
 		while (pSearchNode->pNextNode != nullptr) {
@@ -85,12 +85,12 @@ namespace vector_list {
 				pSearchNode->pNextNode = pDeleteNode->pNextNode;
 				delete pDeleteNode;
 
-				return true;
+				return ;
 			}
 			pSearchNode = pSearchNode->pNextNode;
 		}
 
-		return false;
+		assert(0);
 	}
 
 
@@ -130,7 +130,7 @@ namespace vector_list {
 		ListNode<ElementType> *pSearchNode = original.GetHeadPointer();
 		while (pSearchNode->pNextNode != nullptr) {
 			pSearchNode = pSearchNode->pNextNode;
-			AddElement(pSearchNode->element);
+			AddNonDuplicateElement(pSearchNode->element);
 		}
 	}
 

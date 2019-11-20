@@ -24,22 +24,23 @@ namespace manager {
 
 	public:
 		ElementManager();
-		~ElementManager();
+		virtual ~ElementManager();
 		
 		int AddVectorList(vector_list::Base<ElementType>* pVectorList);
-		bool DeleteVectorList(const int& id);
-		bool AddElement(const int& id,const ElementType& element);
-		bool DeleteElement(const int& id,const ElementType& element);
+		void DeleteVectorList(const int& id);
+		bool AddNonDuplicateElementById(const int& id,const ElementType& element);
+		void DeleteElementFromId(const int& id,const ElementType& element);
 		int GetSize() const;
 		void PrintElement() const;
 		bool AddVectorListsFromFile(std::wstring fileName);
-		bool PrintElementToFile();
+		void PrintElementToFile(const std::wstring& outputFileName);
 
 	private:		
 		std::optional<vector_list::Base<ElementType>*> GetVectorList(const int& id) const;
-		bool AddVectorListFromText(std::wstring text);
+		bool AddVectorListByTextFormat(const std::wstring& text);
 
-		bool WcharToElementTypeAndAddElement(vector_list::Base<int> *newVectorList, const wchar_t* ElementText);
+		ElementType WcharToElementType(const wchar_t* elementcharText);
+		std::optional<vector_list::Base<ElementType> *> CreateVectorOrListByTextFormat(const std::wstring& text);
 
 		ManagerNode<ElementType> *m_pHead;
 		int m_idCnt = VECTORLIST_ID_START_NUMBER;
@@ -78,7 +79,7 @@ namespace manager {
 
 
 	template <typename ElementType>
-	bool ElementManager<ElementType>::DeleteVectorList(const int& id) {
+	void ElementManager<ElementType>::DeleteVectorList(const int& id) {
 		ManagerNode<ElementType> *pSearchNode = new ManagerNode<ElementType>();
 		pSearchNode->pNextNode = m_pHead;
 
@@ -88,34 +89,35 @@ namespace manager {
 				pSearchNode->pNextNode = pDeleteNode->pNextNode;
 				delete pDeleteNode;
 
-				return true;
+				return ;
 			}
 		}
-		return false;
+
+		assert(0); //데이터를 못찾았으니
 	}
 
 
 	template <typename ElementType>
-	bool ElementManager<ElementType>::AddElement(const int& id, const ElementType& element) {
+	bool ElementManager<ElementType>::AddNonDuplicateElementById(const int& id, const ElementType& element) {
 		std::optional<vector_list::Base<ElementType>*> pVectorListOptional = GetVectorList(id);
 		if (!pVectorListOptional.has_value()) {
 			return false;
 		}
 		vector_list::Base<ElementType> *pVectorList = pVectorListOptional.value();
 
-		return pVectorList->AddElement(element);
+		return pVectorList->AddNonDuplicateElement(element);
 	}
 
 	
 	template <typename ElementType>
-	bool ElementManager<ElementType>::DeleteElement(const int& id, const ElementType& element) {
+	void ElementManager<ElementType>::DeleteElementFromId(const int& id, const ElementType& element) {
 		std::optional<vector_list::Base<ElementType>*> pVectorListOptional = GetVectorList(id);
 		if (!pVectorListOptional.has_value()) {
-			return false;
+			assert(0);
 		}
 		vector_list::Base<ElementType> *pVectorList = pVectorListOptional.value();
 
-		return pVectorList->DeleteElement(element);
+		pVectorList->DeleteElement(element);
 	}
 
 
@@ -146,19 +148,19 @@ namespace manager {
 
 
 	template<typename ElementType>
-	bool ElementManager<ElementType>::AddVectorListsFromFile(std::wstring fileName){
-		std::wifstream inputFileText(fileName);
+	bool ElementManager<ElementType>::AddVectorListsFromFile(std::wstring inputFileName){
+		std::wifstream inputFileText(inputFileName);
 
-		if (!inputFileText.is_open()) {
+		if (!inputFileText.is_open()) { //없는 파일을 열려고 한 것은 파일탐색기 gui에서 거르지 못하고 왔기에 assert(0);
 			std::wcout << L"파일을 찾을 수 없습니다!" << L"\n";
-			return false;
+			assert(0);
 		}
 
 		std::wstring lineText;
 		while (inputFileText) {
 			std::getline(inputFileText, lineText);
-			bool returns = AddVectorListFromText(lineText);
-			if (!returns) {
+			bool isLineTextValid = AddVectorListByTextFormat(lineText);
+			if (!isLineTextValid) { //파일이 잘못된 것은 프로그래머 잘못이 아니고, 유저에게 알려야 하기에 false로 처리
 				return false;
 			}
 		}
@@ -168,18 +170,20 @@ namespace manager {
 
 
 	template<typename ElementType>
-	bool ElementManager<ElementType>::PrintElementToFile() {
-		std::wofstream outputFileText("test2.txt");
+	void ElementManager<ElementType>::PrintElementToFile(const std::wstring& outputFileName) {
+		std::wofstream outputFileText(outputFileName);
 		ManagerNode<ElementType> *pSearchNode = m_pHead;
 
-		if (outputFileText.is_open()) {
-			while (pSearchNode != nullptr) {
-				outputFileText << pSearchNode->pVectorList->GetElementListToWstring() << L"\n";
-				pSearchNode = pSearchNode->pNextNode;
-			}
+		if (!outputFileText.is_open()) {
+			assert(0);
 		}
 
-		return true;
+		while (pSearchNode != nullptr) {
+			outputFileText << pSearchNode->pVectorList->GetElementListToWstring() << L"\n";
+			pSearchNode = pSearchNode->pNextNode;
+		}
+		
+
 	}
 
 
@@ -199,13 +203,43 @@ namespace manager {
 
 
 	template<typename ElementType>
-	bool ElementManager<ElementType>::AddVectorListFromText(std::wstring text){
-		vector_list::Base<int> *newVectorList = {};
-		
-		int colonIndex = text.find(':');
-		if (colonIndex == std::string::npos) {
+	bool ElementManager<ElementType>::AddVectorListByTextFormat(const std::wstring& text){ 
+		auto newVectorListOptional = CreateVectorOrListByTextFormat(text);
+		if (!newVectorListOptional.has_value()) {
 			return false;
 		}
+
+		vector_list::Base<ElementType> *newVectorList = CreateVectorOrListByTextFormat(text).value();
+
+		std::wstring textDelim = L",";
+		int textStart = text.find(':') + 1;
+		int textEnd = text.find(textDelim);
+
+		while (textEnd != std::string::npos) {
+			ElementType element = WcharToElementType(text.substr(textStart, textEnd - textStart).c_str());
+			newVectorList->AddNonDuplicateElement(element);
+
+			textStart = textEnd + textDelim.length();
+			textEnd = text.find(textDelim, textStart);
+		}
+
+		ElementType element = WcharToElementType(text.substr(textStart, textEnd - textStart).c_str());
+		newVectorList->AddNonDuplicateElement(element);
+
+		AddVectorList(newVectorList);
+		return true;
+	}
+
+
+	template<typename ElementType>
+	std::optional<vector_list::Base<ElementType> *> ElementManager<ElementType>::CreateVectorOrListByTextFormat(const std::wstring& text) {
+		vector_list::Base<int> *newVectorList = {};
+		int colonIndex = text.find(':');
+
+		if (colonIndex == std::string::npos) {
+			return {};
+		}
+
 		std::wstring typeText = text.substr(0, colonIndex);
 		if (typeText == L"vector") {
 			newVectorList = new vector_list::Vector<ElementType>();
@@ -214,44 +248,29 @@ namespace manager {
 			newVectorList = new vector_list::List<ElementType>();
 		}
 		else {
-			return false;
+			return {};
 		}
-
-		//split and data 넣기, 이런것도 함수화 해야 할까요?
-		std::wstring textDelim = L",";
-		int textStart = colonIndex + 1;
-		int textEnd = text.find(textDelim);
-		while (textEnd != std::string::npos) {
-			WcharToElementTypeAndAddElement(newVectorList, text.substr(textStart, textEnd - textStart).c_str());
-			textStart = textEnd + textDelim.length();
-			textEnd = text.find(textDelim, textStart);
-		}
-		WcharToElementTypeAndAddElement(newVectorList, text.substr(textStart, textEnd - textStart).c_str());
-		AddVectorList(newVectorList);
 		
-		return true;
+		return newVectorList;
 	}
 
-
+	
 	template<typename ElementType>
-	bool ElementManager<ElementType>::WcharToElementTypeAndAddElement(vector_list::Base<int>* newVectorList, const wchar_t* elementText)
-	{
+	ElementType ElementManager<ElementType>::WcharToElementType(const wchar_t* elementcharText){
 		ElementType element = {};
+		std::wstring elementString(elementcharText);
 
+		//if문 노가다 대신에 함수 포인터 배열로 해결을 하려고 했으나.... 
 		if(typeid(ElementType) == typeid(int)){
-			element = _wtoi(elementText);
+			element = std::stoi(elementString);
 		}
 		else if (typeid(ElementType) == typeid(long)) {
-			element = _wtol(elementText);
+			element = std::stol(elementString);
 		}
 		else if (typeid(ElementType) == typeid(double)) {
-			element = _wtof(elementText);
-		}
-		else {
-			return false;
+			element = std::stod(elementString);
 		}
 
-		newVectorList->AddElement(element);
-		return true;
+		return element;
 	}
 }

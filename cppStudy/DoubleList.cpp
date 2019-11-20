@@ -1,5 +1,6 @@
 #include "DoubleList.h"
 #include <iostream>
+#include <cassert>
 
 namespace double_list {
 
@@ -15,9 +16,9 @@ namespace double_list {
 			pListTail = pNewNode;
 		}
 		else {
-			pListHead->dpPrevNode = pNewNode;
+			pListHead->pPrevNode = pNewNode;
 		}
-		pNewNode->dpNextNode = pListHead;
+		pNewNode->pNextNode = pListHead;
 		pListHead = pNewNode;
 	}
 
@@ -30,43 +31,45 @@ namespace double_list {
 			pListHead = pNewNode;
 		}
 		else {
-			pListTail->dpNextNode = pNewNode;
+			pListTail->pNextNode = pNewNode;
 		}
-		pNewNode->dpPrevNode = pListTail;
+		pNewNode->pPrevNode = pListTail;
 		pListTail = pNewNode;
 	}
 
 
 	void DeleteHead(){
 		if (pListHead == nullptr) {
-			return;
+			assert(0);
 		}
 
-		DoubleListNode *pDeleteNode = pListHead->dpNextNode;
+		DoubleListNode *pListHeadNextNode = pListHead->pNextNode;
 		delete pListHead;
-		pListHead = pDeleteNode;
+
+		pListHead = pListHeadNextNode;
 		if (pListHead == nullptr) {
 			pListTail = {};
 		}
 		else {
-			pListHead->dpPrevNode = {};
+			pListHead->pPrevNode = {};
 		}
 	}
 
 
 	void DeleteTail(){
 		if (pListTail == nullptr) {
-			return;
+			assert(0);
 		}
 
-		DoubleListNode *pDeleteNode = pListTail->dpPrevNode;
+		DoubleListNode *pListTailPrevNode = pListTail->pPrevNode;
 		delete pListTail;
-		pListTail = pDeleteNode;
+
+		pListTail = pListTailPrevNode;
 		if (pListTail == nullptr) {
 			pListHead = {};
 		}
 		else {
-			pListTail->dpNextNode = {};
+			pListTail->pNextNode = {};
 		}
 	}
 
@@ -77,7 +80,7 @@ namespace double_list {
 
 		while (pSearchNode != nullptr) {
 			std::wcout << pSearchNode->element << L"  ";
-			pSearchNode = pSearchNode->dpNextNode;
+			pSearchNode = pSearchNode->pNextNode;
 		}
 		std::wcout << L"\n";
 	}
