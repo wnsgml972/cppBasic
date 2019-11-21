@@ -15,21 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vector.h">
+    <ClInclude Include="Stack.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="VectorManager.h">
+    <ClInclude Include="Vector.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="List.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DoubleList.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Base.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="vector.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="VectorManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Stack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DoubleList.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

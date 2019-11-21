@@ -1,50 +1,63 @@
 
-int main() 
+#include "Stack.h"
+#include "DoubleList.h"
+
+#include "Vector.hpp"
+#include "List.hpp"
+#include "Manager.hpp" 
+
+#include <iostream>
+#include <memory>
+#include <string>
+#include <optional>
+
+
+
+int main()
 {
-	// DataManager 예제
+	std::wcout.imbue(std::locale("")); //한글 출력 설정
+
+
+	////Manager 검증
 	{
-		// std::smart_pointer<DataManager> dataManager = std::make_shared<DataManager>();
-		// dataManager->CreateVector(std::make_shared<V>()); 1
-		// dataManager->CreateVector(std::make_shared<V>()); 2  4
-		// dataManager->CreateVector(std::make_shared<V>()); 3
+		// namespace naming snake 소문자_
+		vector_list::Base<int> *t1 = new vector_list::List<int>();
+		vector_list::Base<int> *t2 = new vector_list::Vector<int>();
+		vector_list::Base<int> *t3 = new vector_list::List<int>();
+		vector_list::Base<int> *t4 = new vector_list::Vector<int>();
+		vector_list::Base<int> *t5 = new vector_list::List<int>();
+		vector_list::Base<int> *t6 = new vector_list::Vector<int>();
 
-		// dataManager->Append(2, 4); id, data
+		std::unique_ptr<manager::ElementManager<int>> d1 = std::make_unique<manager::ElementManager<int>>();
 
-		// dataManager->PrintData(); 
+		d1->AddVectorList(t1);
+		d1->AddVectorList(t2);
+		d1->AddVectorList(t3);
+		d1->AddVectorList(t4);
+		d1->AddVectorList(t5);
+		d1->AddVectorList(t6);
 
-		// if(dataManager->Delete(2, 3) ;
+		d1->AddNonDuplicateElementById(1, 1);
+		d1->AddNonDuplicateElementById(1, 2);
+		d1->AddNonDuplicateElementById(1, 3);
+		d1->DeleteElementFromId(1, 1);
+		// d1->DeleteElementFromId(1, 4); //고의적 오류 테스트
+		// d1->DeleteElementFromId(-1, 4);
+		d1->AddNonDuplicateElementById(7, 1);
 
-		// dataManager->PrintData(); 
+		std::wcout << "size : " << d1->GetSize() << " \n";
+		d1->PrintElement();
+
+		*t4 = *t2;
+
+		d1->AddVectorListsFromFile(L"test.txt");
+		std::wcout << L"size : " << d1->GetSize() << L" \n";
+		d1->PrintElement();
+		d1->CreateFilebyElement(L"test2.txt");
+
 	}
 
-	// Next DataManager Template 예제
-	{
-		// double
-		// std::smart_pointer<DataManager> dataManager = std::make_shared<DataManager>();
-		// dataManager->CreateVector(std::make_shared<V>()); 1
-		// dataManager->CreateVector(std::make_shared<V>()); 2  4
-		// dataManager->CreateVector(std::make_shared<V>()); 3
 
-		// dataManager->Append(2, 4.3); id, data
+	return 0;
 
-		// dataManager->PrintData(); 
-
-		// if(dataManager->Delete(2, 3.2) ;
-
-		// dataManager->PrintData(); 
-
-		// int
-		// std::smart_pointer<DataManager> dataManager = std::make_shared<DataManager>();
-		// dataManager->CreateVector(std::make_shared<V>()); 1
-		// dataManager->CreateVector(std::make_shared<V>()); 2  4
-		// dataManager->CreateVector(std::make_shared<V>()); 3
-
-		// dataManager->Append(2, 4); id, data
-
-		// dataManager->PrintData(); 
-
-		// if(dataManager->Delete(2, 3) ;
-
-		// dataManager->PrintData(); 
-	}
 }

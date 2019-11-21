@@ -153,13 +153,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="vector.h" />
-    <ClInclude Include="VectorManager.h" />
+    <ClInclude Include="DoubleList.h" />
+    <ClInclude Include="List.hpp" />
+    <ClInclude Include="Stack.h" />
+    <ClInclude Include="Vector.hpp" />
+    <ClInclude Include="Manager.hpp" />
+    <ClInclude Include="Base.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DoubleList.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="vector.cpp" />
-    <ClCompile Include="VectorManager.cpp" />
+    <ClCompile Include="Stack.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
