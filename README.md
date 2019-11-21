@@ -1,23 +1,4 @@
 # cppBasic
-## 총과제 진행 사항 예정
-- c++ 교육 진행
-  - 기본적인 c++ 교육 진행
-  - 개발 환경 구성 : Visual Studio, Visual  등
-  - 협업 : 기능 기반 브랜치 사용, 이슈 기반 개발, 코드 리뷰, Clean Code, 코딩 규칙
-- MFC 프로젝트
-  - 마찬가지로 진행, 지금까지 배운 것들을 활용한 프로젝트 개발 진행
-- DB
-  - 사내 메모리 DB를 활용한 기본적인 CRUD 개발 진행
-- Phase
-  - 사내 UI 프레임워크를 통한 UI 개발 및 로직 개발 교육 진행
-- Alice UI or CAD
-  - UI 엔진 개발자를 위한 Alice UI 개발 혹은
-  - CAD 기능 개발을 위한 CAD 개발 교육 진행
-- 실무
-  - 전체 프로그램의 아키텍쳐 및 개발 철학 교육
-  - 기본 디버깅 방법 및 메모리 DB 디버깅 방법 교육
-  
-
 ## CPP 교육용
 > 1. fork하여 feature/start branch에서 자신의 Github ID로 Branch를 만들어 개발 시작
 > 2. Issue 생성
