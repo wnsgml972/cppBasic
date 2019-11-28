@@ -12,7 +12,7 @@
 - 삽입,삭제 가능해야함
 - Stack 구현 함수 : Push, Pop, SetSize
 - List 구현 함수 : AddHead, AddTail, DeleteHead, DeleteTail)
-- PrintInfomation - 전체 정보 출력 함수 제공"
+- PrintInfomation - 전체 정보 출력 함수 제공
 
 <br/>
 
@@ -26,29 +26,30 @@
 - DataType int형
 - namespace 사용
 - 가변으로 데이터를 삽입가능해야함
-- Add : 동일한 데이터가 있으면 Add 실패
+- Add : 동일한 데이터가 있으면 Add 실패 (함수명은 마음대로)
 - Delete : 동일한 데이터가 없으면 Delete 실패
 - GetSize : 현재 데이터 개수 반환
-- PrintData : 현재 데이터 정보를 표준 출력으로 출력
+- Print : 현재 데이터 정보를 표준 출력으로 출력
 - 삽입되는 데이터를 표준 입력으로 받음 (유니코드 형식)
 - 변수는 private, 함수는 public
-- 상속을 통해 기반 클래스는 동일하게 구현
+- 상속을 통해 Vector, List 구현 (vector와 list는 같은 클래스를 상속 받음)
+
+## 함수 메모리 클래스 심화 : 3차 과제
+### Vector/List 템플릿 구현
+- 구현한 클래스 템플릿화
+- 파일 입력을 활용한 데이터 삽입 기능
+- 파일 출력을 통한 데이터 정보 출력 기능
+- 연산자 오버로딩 구현 - 본인이 구현하고 싶은 연산자 1개 구현
 ### DataManager 클래스 구현
 - 생성/삭제되는 Vector/List 정보를 관리
-- GetSize - 전체 자료구조의 갯수를 반환
-- PrintInfomation - 전체 자료구조의 정보 출력
+- GetSize - 전체 자료구조의 개수를 반환
+- PrintInformation - 전체 자료구조의 정보 출력
 
 ### Reference
 * <https://github.com/wnsgml972/midas_log/blob/master/contents/BasicEducation/CppBasic.md>
 
 
 <br/>
-
-## Vector/List 템플릿 구현 : 3차 과제
-- 전날 구현한 클래스 템플릿화
-- 파일 입력을 활용한 데이터 삽입 기능
-- 파일 출력을 통한 데이터 정보 출력 기능
-- 연산자 오버로딩 구현 - 대입연산자
 
 ## MFC 프로젝트 : 4차 과제
 - 해당 기능을 포함한 UI가 있는 프로젝트 진행하기
